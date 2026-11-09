@@ -33,7 +33,7 @@ npx wrangler dev
 
 ## Deploy
 
-The site runs on **Cloudflare Workers** with static assets. `wrangler.jsonc` serves `public/` and attaches the `akashmunshi.com` and `www.akashmunshi.com` custom domains; `src/worker.js` redirects www to the bare domain and hands every other request to the assets.
+The site runs on **Cloudflare Workers** with static assets. `wrangler.jsonc` serves `public/` and attaches the `akashmunshi.com` and `www.akashmunshi.com` custom domains; `src/worker.js` sends http to https and www to the bare domain, and hands every other request to the assets.
 
 ```bash
 npx wrangler deploy
@@ -48,7 +48,7 @@ public/
   index.html              the whole page: markup, styles and content
   site.js                 header, scroll reveals, number counters and the hero sketch
   vendor/rough-4.6.6.js   rough.js, draws the pencil sketch in the hero
-src/worker.js             Cloudflare Worker: www redirect, then serves public/
+src/worker.js             Cloudflare Worker: https and www redirects, then serves public/
 wrangler.jsonc            Worker config: assets directory and custom domains
 docs/screenshot.png       the image at the top of this README
 AGENTS.md                 house rules for coding agents (and people) editing the page
