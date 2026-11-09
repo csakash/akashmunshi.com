@@ -1,10 +1,10 @@
 # AGENTS.md
 
-House rules for anyone, human or coding agent, who edits this site. Read this before you change `index.html`.
+House rules for anyone, human or coding agent, who edits this site. Read this before you change `public/index.html`.
 
 ## What this repo is
 
-Akash Munshi's personal site: one static page (`index.html`) plus `site.js` for behaviour and `vendor/rough-4.6.6.js` for the hero sketch. No framework, no build step, no package manager. Keep it that way.
+Akash Munshi's personal site: one static page (`public/index.html`) plus `public/site.js` for behaviour and `public/vendor/rough-4.6.6.js` for the hero sketch. It is served by a small Cloudflare Worker (`src/worker.js`, `wrangler.jsonc`) that only redirects www and serves `public/`. No framework, no build step, no package manager. Keep it that way.
 
 ## Structure (keep it)
 
@@ -41,10 +41,14 @@ Rules for content:
 ## Check your work
 
 ```bash
-python3 -m http.server 8000
+python3 -m http.server 8000 --directory public
 ```
 
 Open <http://localhost:8000>, check desktop and a 375px viewport, then confirm the browser console has no errors.
+
+## Deploy
+
+`npx wrangler deploy` from the repo root. Only files in `public/` are served.
 
 ## Commits
 

@@ -19,26 +19,39 @@ It is one hand-written HTML page. No framework, no build step, no tracking. It s
 
 ## Run it locally
 
-Any static file server works. From the repo root:
+Any static file server works:
 
 ```bash
-python3 -m http.server 8000
+python3 -m http.server 8000 --directory public
 ```
 
-Then open <http://localhost:8000>. Opening `index.html` straight from disk also works.
+Then open <http://localhost:8000>. To run it exactly as production does, through the Worker:
+
+```bash
+npx wrangler dev
+```
 
 ## Deploy
 
-The repo root is the site. Point any static host at it with no build command and `.` as the output directory: GitHub Pages, Cloudflare Pages, Vercel or Netlify all work as they are.
+The site runs on **Cloudflare Workers** with static assets. `wrangler.jsonc` serves `public/` and attaches the `akashmunshi.com` and `www.akashmunshi.com` custom domains; `src/worker.js` redirects www to the bare domain and hands every other request to the assets.
+
+```bash
+npx wrangler deploy
+```
+
+The first deploy needs `wrangler login` with access to the Cloudflare account that holds the akashmunshi.com zone. Because `public/` is plain HTML, any other static host works too: point it at `public/` with no build command.
 
 ## How it's built
 
 ```
-index.html              the whole page: markup, styles and content
-site.js                 header, scroll reveals, number counters and the hero sketch
-vendor/rough-4.6.6.js   rough.js, draws the pencil sketch in the hero
-docs/screenshot.png     the image at the top of this README
-AGENTS.md               house rules for coding agents (and people) editing the page
+public/
+  index.html              the whole page: markup, styles and content
+  site.js                 header, scroll reveals, number counters and the hero sketch
+  vendor/rough-4.6.6.js   rough.js, draws the pencil sketch in the hero
+src/worker.js             Cloudflare Worker: www redirect, then serves public/
+wrangler.jsonc            Worker config: assets directory and custom domains
+docs/screenshot.png       the image at the top of this README
+AGENTS.md                 house rules for coding agents (and people) editing the page
 ```
 
 - **Design.** It shares its palette and type with the Intraface landing page: warm paper background, ink text, dashed hairlines, Inter Tight for headings, Inter for body, Geist Mono for small print. Every colour is a CSS custom property in `:root`.
@@ -48,7 +61,7 @@ AGENTS.md               house rules for coding agents (and people) editing the p
 
 ## Editing
 
-Content lives in `index.html`. Before you change it, read [AGENTS.md](AGENTS.md): it sets the section order, the voice and the design rules, and says what must never go on the page.
+Content lives in `public/index.html`. Before you change it, read [AGENTS.md](AGENTS.md): it sets the section order, the voice and the design rules, and says what must never go on the page.
 
 ## Links
 
