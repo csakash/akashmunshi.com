@@ -13,7 +13,7 @@ It is one hand-written HTML page. No framework, no build step, no tracking. It s
 | **Hero and numbers** | Who I am, how to reach me, and four numbers I can back |
 | **01 · Work** | Motiontic and its clients (Quantum Heaps, PulseCorp, NeevCloud, Bloom Markets, mirrAR), each with my role, then Narrative, mirrAR, Durbin and Quinch |
 | **02 · Motiontic lab** | 20 experiments, most active first: ARI-42, GLoop, gstack-loops, Drevon, Intraface, Uno Code and more |
-| **03 · Writing** | Essays and guides on building with agents |
+| **03 · Writing** | Essays and guides on building with agents, each on its own page at its original URL |
 | **04 · Journey** | The timeline from 2017 to now |
 | **05 · About** | How I work and the communities I run |
 
@@ -48,6 +48,8 @@ public/
   index.html              the whole page: markup, styles and content
   site.js                 header, scroll reveals, number counters and the hero sketch
   vendor/rough-4.6.6.js   rough.js, draws the pencil sketch in the hero
+  <slug>.html             one page per essay, served at akashmunshi.com/<slug>
+  images/                 images used in the essays
 src/worker.js             Cloudflare Worker: https and www redirects, then serves public/
 wrangler.jsonc            Worker config: assets directory and custom domains
 docs/screenshot.png       the image at the top of this README

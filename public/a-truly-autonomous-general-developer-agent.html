@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The time of a truly autonomous general developer agent is here - Akash Munshi</title>
+<meta name="description" content="What changes when a coding agent can own the whole development loop on its own.">
+<meta name="theme-color" content="#F4F3EE">
+<link rel="canonical" href="https://akashmunshi.com/a-truly-autonomous-general-developer-agent">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The time of a truly autonomous general developer agent is here">
+<meta property="og:description" content="What changes when a coding agent can own the whole development loop on its own.">
+<meta property="og:url" content="https://akashmunshi.com/a-truly-autonomous-general-developer-agent">
+<meta property="article:published_time" content="2026-02-26">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@akashmunshi07">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"The time of a truly autonomous general developer agent is here","description":"What changes when a coding agent can own the whole development loop on its own.","datePublished":"2026-02-26","url":"https://akashmunshi.com/a-truly-autonomous-general-developer-agent","author":{"@type":"Person","name":"Akash Munshi","url":"https://akashmunshi.com/"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f4f3ee; --ink:#121211; --ink2:#2b2b29; --muted:#6c6b66; --faint:#a3a29c;
+  --line:rgba(18,18,17,.24); --hair:rgba(18,18,17,.1); --tint:rgba(18,18,17,.05); --paper:#fcfbf8;
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --g:clamp(16px,4.4vw,72px); --pad:clamp(18px,2.4vw,40px);
+  --hdr:clamp(56px,4.6vw,72px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:clamp(16px,1.15vw,18px);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--ink);color:var(--bg)}
+.dash{height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 9px)}
+
+.hdr{position:sticky;top:0;z-index:50;height:var(--hdr);background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.hdr-in{height:100%;display:flex;align-items:center;padding-inline:var(--pad);gap:24px}
+.logo{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:clamp(17px,1.35vw,21px);letter-spacing:-.03em}
+.logo .mk{width:26px;height:26px;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:3px;display:grid;place-items:center;font:500 11px/1 var(--mono);letter-spacing:0}
+.back{margin-left:auto;font-size:14px;color:var(--ink2)}
+.back:hover{color:var(--ink)}
+
+.post{width:min(100% - 2*var(--g),720px);margin:0 auto;padding:clamp(40px,6vw,88px) 0 clamp(40px,5vw,72px)}
+.meta{font:400 12.5px/1.6 var(--mono);color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+h1.t{font-family:var(--display);font-weight:400;font-size:clamp(32px,4vw,56px);line-height:1.06;letter-spacing:-.028em;margin:14px 0 18px}
+.lede{color:var(--muted);font-size:clamp(17px,1.3vw,20px);line-height:1.5;padding-bottom:clamp(28px,3vw,40px)}
+
+.prose{padding-top:clamp(28px,3vw,40px);color:var(--ink2)}
+.prose>*+*{margin-top:1.1em}
+.prose h2{font-family:var(--display);font-weight:500;font-size:clamp(22px,1.8vw,28px);line-height:1.2;letter-spacing:-.018em;color:var(--ink);margin-top:2em}
+.prose h3{font-family:var(--display);font-weight:500;font-size:clamp(18px,1.4vw,21px);line-height:1.3;letter-spacing:-.01em;color:var(--ink);margin-top:1.7em}
+.prose h4{font-weight:600;color:var(--ink);margin-top:1.5em}
+.prose strong{color:var(--ink);font-weight:600}
+.prose a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.prose a:hover{text-decoration-color:var(--ink)}
+.prose ul,.prose ol{padding-left:1.3em}
+.prose li+li{margin-top:.35em}
+.prose li::marker{color:var(--muted)}
+.prose blockquote{border-left:2px solid var(--ink);padding:.2em 0 .2em 1.1em;color:var(--ink)}
+.prose code{font-family:var(--mono);font-size:.86em;background:var(--tint);padding:.12em .36em;border-radius:3px}
+.prose pre{background:#121211;color:#e9e8e2;padding:16px 18px;border-radius:2px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.prose img{display:block;max-width:100%;height:auto;margin-inline:auto;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:6px;margin-block:1.8em}
+.prose hr{border:0;height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 9px);margin:2.2em 0}
+.prose table{width:100%;border-collapse:collapse;font-size:.92em}
+.prose th,.prose td{text-align:left;padding:8px 10px;border-bottom:1px dashed var(--line)}
+.embed{position:relative;aspect-ratio:16/9;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:6px;margin-block:1.8em!important;background:#121211}
+.embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+.pnav{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:clamp(40px,5vw,64px);padding-top:24px}
+.pn{display:block;font-family:var(--display);font-size:16px;line-height:1.35;letter-spacing:-.01em}
+.pn span{display:block;font:400 11.5px/1 var(--mono);color:var(--muted);margin-bottom:8px}
+.pn:hover{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.pn.r{text-align:right}
+.foot{width:min(100% - 2*var(--g),720px);margin:0 auto;padding:28px 0 40px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font:400 12px/1.6 var(--mono);color:var(--faint)}
+.foot a:hover{color:var(--ink)}
+@media (max-width:600px){.pnav{grid-template-columns:1fr}.pn.r{text-align:left}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="logo" href="/" aria-label="Akash Munshi, home"><span class="mk">AM</span><span>Akash Munshi</span></a>
+    <a class="back" href="/#writing">← All writing</a>
+  </div>
+  <div class="dash" style="opacity:.6"></div>
+</header>
+
+<main>
+  <article class="post">
+    <div class="meta"><time datetime="2026-02-26">26 Feb 2026</time><span>6 min read</span></div>
+    <h1 class="t">The time of a truly autonomous general developer agent is here</h1>
+    <p class="lede">What changes when a coding agent can own the whole development loop on its own.</p>
+    <div class="dash"></div>
+    <div class="prose">
+<p>  <img src="/images/autonomous-developer-agent.jpeg" alt="An illustration of an autonomous developer agent at work" loading="lazy"></p>
+<p>The time of a truly autonomous General Developer Agent is here.</p>
+<p>Remember the series Silicon Valley? Where Gilfoyle&#39;s Anton AI literally took over the company&#39;s entire codebase and ended up deleting stuff or ordering huge amounts of meat?</p>
+<p>I think the time is already here, and somewhere in the world, somebody has already built it.</p>
+<p>I am doing this interesting exercise while I am writing this piece.</p>
+<p>The main answer I am looking for is — &quot;In an ideal world, if I had the chance to create the best developer ever, what are the skills, qualities and best practices I would want the developer to have?&quot;</p>
+<p>I have spent my last eight years of my life coding. I have tried multiple roles like being a founder or being a PM. In all of those roles, I have found one thing in common: if you know coding irrespective of whichever role you are, you get this magical ability to visualise systems in a way that nobody else can. For the rest of the world, all of these systems might sound gibberish, but as a developer, you know these systems are running the world, and you feel super proud of something you have built which has an insane level of engineering behind it.</p>
+<p>This is about to change. If you think honestly, you would realise that developing a product is such a mechanical piece of work, and somehow we get attached to it emotionally. But do you really think that is where you want to spend the rest of your life? That is what can give you an insane amount of wealth? For most people, it won&#39;t. For that 0.1% of exceptional devs, we still need you, and I think you are enough to handle all the things which need dev work today.</p>
+<p>But for the remaining 99.9% of the people, I think it&#39;s time to change our approach. AI has officially started moving the human race forward once again. I will talk about the approach in a different blog, but let&#39;s come back to our main goal of building a truly autonomous General Developer Agent.</p>
+<h2>Workflow ≠ Agentic</h2>
+<p>First, let me break down why I am talking about General Developer Agent and especially emphasising on the word <strong>General</strong>.</p>
+<p>Developers are human at the end of the day. So when it comes to creating a truly autonomous developer agent, there is a high chance of ending up creating a workflow-driven agent rather than an agentic one. I made this mistake. When it comes to reliability, this works, but this does not really challenge the motto of &quot;Building for the next model&quot;.</p>
+<blockquote>
+<p>Don&#39;t create a workflow. As humans, we don&#39;t work on workflows. If you are given the same tasks every 1-2 months, almost 100% of the time, you will do something differently every time you take up that task.</p>
+</blockquote>
+<p>There is no reason to think that agents can&#39;t do the same. Let&#39;s remind ourselves that with every individual experiment like this, our goal should be building for the next model.</p>
+<p>Now, coming to my thought of how being a developer can make you better at any job. My entire purpose of doing this is to offload any kind of dev work to the agent and focus on more important things like product, growth, design, etc. Hence, I am going to design this developer in such a way that it can technically become a digital developer clone of me.</p>
+<h2>The Values of a Great Developer</h2>
+<p>As a developer, I have grown over the years to have some values, and those values are:</p>
+<ul>
+<li>Quality over speed</li>
+<li>Thinking of multiple use cases before building</li>
+<li>Thinking of multiple edge cases as well</li>
+<li>Trying to write down the thoughts</li>
+<li>Finding the RCA</li>
+<li>Trying to explore multiple possible solutions</li>
+<li>Writing test cases</li>
+<li>Writing comments</li>
+<li>Writing tech docs</li>
+</ul>
+<p>Now, these are things that come to mind when I think of an ideal world. I would rather spend most of my time doing all of these before starting to code. But let&#39;s be real, hardly ever do we get to tick all the points due to deadlines. AI already has taken care of a lot of the parts like test cases, comments, and tech docs reliably. But now is the time I think each and every one of these values can be reliably followed using a truly autonomous General Developer Agent.</p>
+<h2>The Skills AI Already Has</h2>
+<p>Next is the skills that we want the best developer to have. Certain skills are required to be able to take care of all the requirements which come with infinite possibilities. For human learning, every language, every best practice, or tackling every requirement is just impossible. But not for AI.</p>
+<ul>
+<li>AI already knows all the languages in the world.</li>
+<li>AI already has an understanding of best practices, thanks to some of the OGs in the dev world for writing those insightful blogs.</li>
+<li>AI can navigate computers today. There is definitely scope for improvement, but at least it can run terminal reliably.</li>
+<li>AI already can browse the internet both in headless mode and in headful mode. Yes, it is slow, but I think it is getting better every day.</li>
+</ul>
+<p>I think these are the four skills or knowledge that can let you cover almost 90-95% of the tasks you want to give it. I am personally running such an agent for shipping features for the last couple of days, and my days have not looked better ever.</p>
+<h2>What Actually Makes a Developer Great</h2>
+<p>But above all of these, there are certain qualities which make a developer truly great. These are:</p>
+<ul>
+<li>Finding the root cause reliably</li>
+<li>Context aware systems thinking and the ability to design it</li>
+<li>Project specific memory and the ability to learn from its mistakes</li>
+<li>Knowing what not to build means finding an existing solution, library, or managed service</li>
+<li>Knowing when &quot;good enough&quot; is actually &quot;good enough&quot;</li>
+</ul>
+<p>While we expect these qualities from every developer that every company hires, these actually differentiate the best developers from the set of average ones.</p>
+<h2>So Here&#39;s What I&#39;m After</h2>
+<p>I want to build the best developer in the world, and this is going to be an iterating project I am going after, and it might take days. I know in this world, days are like months. But I am consciously going to take days. Not going to spend my everyday building this, but I would rather like to find and jot down all the use cases I can think of that can make my life with nearly 0 dev work.</p>
+<p>This unlocks something super important. As developers, there is a tendency to jump into the build mode without even starting to think. Most of the time, this ideology distracts the individual from the core problem that he or she is trying to solve. That&#39;s why you will find most of the visionary founders are not necessarily developer-first.</p>
+<blockquote>
+<p>Everyone should be completely free from the thought of how to build things. Every founder, product manager, and designer needs to start focusing on the problem they are trying to solve and become completely free from the thought of technical limitations.</p>
+</blockquote>
+<p>I have already created pieces of it. Some proactive agents are always connected to my tools, and a CLI tool that uses Claude Code to work on my project from a Slack channel. I have also tried OpenClaw, but it consumes too many tokens.</p>
+<p>So all in all, this is a product which actually can evolve every day and will end up making my days easier over time, and probably I will pick up farming or living on mountains in no time.</p>
+
+    </div>
+    <div class="dash" style="margin-top:clamp(40px,5vw,64px)"></div>
+    <nav class="pnav" aria-label="More writing">
+      <a class="pn" href="/from-vibe-coding-to-agentic-engineering"><span>Older</span>From vibe coding to agentic engineering</a>
+      <span></span>
+    </nav>
+  </article>
+</main>
+
+<footer class="foot">
+  <span>© 2026 Akash Munshi · <a href="/">akashmunshi.com</a></span>
+  <span><a href="https://x.com/akashmunshi07">X</a> · <a href="https://www.linkedin.com/in/akash-munshi/">LinkedIn</a> · <a href="mailto:akashmunshi07@gmail.com">Email</a></span>
+</footer>
+
+</body>
+</html>

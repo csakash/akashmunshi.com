@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The missing layer: why context is the real bottleneck in AI - Akash Munshi</title>
+<meta name="description" content="The models are good enough. The bottleneck is the context we give them.">
+<meta name="theme-color" content="#F4F3EE">
+<link rel="canonical" href="https://akashmunshi.com/the-missing-layer-of-ai-in-2026">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The missing layer: why context is the real bottleneck in AI">
+<meta property="og:description" content="The models are good enough. The bottleneck is the context we give them.">
+<meta property="og:url" content="https://akashmunshi.com/the-missing-layer-of-ai-in-2026">
+<meta property="article:published_time" content="2026-01-19">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@akashmunshi07">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"The missing layer: why context is the real bottleneck in AI","description":"The models are good enough. The bottleneck is the context we give them.","datePublished":"2026-01-19","url":"https://akashmunshi.com/the-missing-layer-of-ai-in-2026","author":{"@type":"Person","name":"Akash Munshi","url":"https://akashmunshi.com/"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f4f3ee; --ink:#121211; --ink2:#2b2b29; --muted:#6c6b66; --faint:#a3a29c;
+  --line:rgba(18,18,17,.24); --hair:rgba(18,18,17,.1); --tint:rgba(18,18,17,.05); --paper:#fcfbf8;
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --g:clamp(16px,4.4vw,72px); --pad:clamp(18px,2.4vw,40px);
+  --hdr:clamp(56px,4.6vw,72px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:clamp(16px,1.15vw,18px);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--ink);color:var(--bg)}
+.dash{height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 9px)}
+
+.hdr{position:sticky;top:0;z-index:50;height:var(--hdr);background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.hdr-in{height:100%;display:flex;align-items:center;padding-inline:var(--pad);gap:24px}
+.logo{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:clamp(17px,1.35vw,21px);letter-spacing:-.03em}
+.logo .mk{width:26px;height:26px;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:3px;display:grid;place-items:center;font:500 11px/1 var(--mono);letter-spacing:0}
+.back{margin-left:auto;font-size:14px;color:var(--ink2)}
+.back:hover{color:var(--ink)}
+
+.post{width:min(100% - 2*var(--g),720px);margin:0 auto;padding:clamp(40px,6vw,88px) 0 clamp(40px,5vw,72px)}
+.meta{font:400 12.5px/1.6 var(--mono);color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+h1.t{font-family:var(--display);font-weight:400;font-size:clamp(32px,4vw,56px);line-height:1.06;letter-spacing:-.028em;margin:14px 0 18px}
+.lede{color:var(--muted);font-size:clamp(17px,1.3vw,20px);line-height:1.5;padding-bottom:clamp(28px,3vw,40px)}
+
+.prose{padding-top:clamp(28px,3vw,40px);color:var(--ink2)}
+.prose>*+*{margin-top:1.1em}
+.prose h2{font-family:var(--display);font-weight:500;font-size:clamp(22px,1.8vw,28px);line-height:1.2;letter-spacing:-.018em;color:var(--ink);margin-top:2em}
+.prose h3{font-family:var(--display);font-weight:500;font-size:clamp(18px,1.4vw,21px);line-height:1.3;letter-spacing:-.01em;color:var(--ink);margin-top:1.7em}
+.prose h4{font-weight:600;color:var(--ink);margin-top:1.5em}
+.prose strong{color:var(--ink);font-weight:600}
+.prose a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.prose a:hover{text-decoration-color:var(--ink)}
+.prose ul,.prose ol{padding-left:1.3em}
+.prose li+li{margin-top:.35em}
+.prose li::marker{color:var(--muted)}
+.prose blockquote{border-left:2px solid var(--ink);padding:.2em 0 .2em 1.1em;color:var(--ink)}
+.prose code{font-family:var(--mono);font-size:.86em;background:var(--tint);padding:.12em .36em;border-radius:3px}
+.prose pre{background:#121211;color:#e9e8e2;padding:16px 18px;border-radius:2px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.prose img{display:block;max-width:100%;height:auto;margin-inline:auto;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:6px;margin-block:1.8em}
+.prose hr{border:0;height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 9px);margin:2.2em 0}
+.prose table{width:100%;border-collapse:collapse;font-size:.92em}
+.prose th,.prose td{text-align:left;padding:8px 10px;border-bottom:1px dashed var(--line)}
+.embed{position:relative;aspect-ratio:16/9;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:6px;margin-block:1.8em!important;background:#121211}
+.embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+.pnav{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:clamp(40px,5vw,64px);padding-top:24px}
+.pn{display:block;font-family:var(--display);font-size:16px;line-height:1.35;letter-spacing:-.01em}
+.pn span{display:block;font:400 11.5px/1 var(--mono);color:var(--muted);margin-bottom:8px}
+.pn:hover{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.pn.r{text-align:right}
+.foot{width:min(100% - 2*var(--g),720px);margin:0 auto;padding:28px 0 40px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font:400 12px/1.6 var(--mono);color:var(--faint)}
+.foot a:hover{color:var(--ink)}
+@media (max-width:600px){.pnav{grid-template-columns:1fr}.pn.r{text-align:left}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="logo" href="/" aria-label="Akash Munshi, home"><span class="mk">AM</span><span>Akash Munshi</span></a>
+    <a class="back" href="/#writing">← All writing</a>
+  </div>
+  <div class="dash" style="opacity:.6"></div>
+</header>
+
+<main>
+  <article class="post">
+    <div class="meta"><time datetime="2026-01-19">19 Jan 2026</time><span>9 min read</span></div>
+    <h1 class="t">The missing layer: why context is the real bottleneck in AI</h1>
+    <p class="lede">The models are good enough. The bottleneck is the context we give them.</p>
+    <div class="dash"></div>
+    <div class="prose">
+<p>Software work is changing. And with it, every aspect of how we build, ship, and iterate needs to change too.</p>
+<p>But we are stuck. Not because the models are not good enough. They are. The bottleneck is somewhere else entirely.</p>
+<h2>How Software Work Used to Happen</h2>
+<p>Let me paint the picture of how things worked before this current wave of AI.</p>
+<p>Somebody comes up with an idea. Or somebody talks to customers. Or somebody has a problem they want solved. They draft an initial version of it in a document. Not a prototype. Just an ideation document. Raw thoughts on a page.</p>
+<p>That document comes to a team. They discuss possibilities. They discuss scope. They jot everything down. After all the jotting, they start working.</p>
+<p>And then it takes a truly, crucially insane amount of time to execute.</p>
+<p>Then comes review. And if you are building on top of existing systems, especially money-making systems, you get extensive reviews. Multiple rounds. Back and forth. Weeks sometimes.</p>
+<p>Then it ships. Then the feedback loop continues. More ideas. More documents. More discussions. More execution. More review.</p>
+<p>The whole process was slow. Painfully slow. That is why software companies were not moving fast. The middle of the work, the actual building, absorbed most of the time and energy.</p>
+<h2>What Changed With AI</h2>
+<p>But with AI, especially with this year&#39;s changes, something fundamental shifted.</p>
+<p>Coding models like Opus or Codex became so insanely good that if someone gives the right context, they can technically do a very complicated job in just a single prompt.</p>
+<p>And that is where experience matters.</p>
+<p>Building or coding is like the layman&#39;s work now. You probably code very well. Someone else can code like crazy good. But 95% of the engineers out there are nowhere close to how these models can code.</p>
+<p>Probably 5% or 2% of engineers are insanely good at coding and probably write better code than what AI does. And that is fine. That level of skill is required for handling really heavy systems like trading, streaming, and other critical infrastructure.</p>
+<p>But here is the thing: the world does not run only on those systems.</p>
+<p>The world runs on so many other things that do not need that kind of criticality at all, especially on the coding level. These systems can have bugs and they still work. There are systems that fail, but they still work. And that is where the speed has come in.</p>
+<h2>The Gap Nobody Is Talking About</h2>
+<p>I was talking to a staff engineer at a fairly huge company in the US. They are adopting AI like crazy. Throughout the last year, their team shipped 100% of the code written by AI.</p>
+<p>And it works.</p>
+<p>They have created their own orchestration platforms and internal tooling. But they still have one very crucial pain point.</p>
+<p>When a staff engineer or a senior engineer who actually knew how to code before AI came in, who actually went through the rigorous process of understanding concepts and building mental models, when they use AI, they can do a very complicated job in a single prompt or two.</p>
+<p>But the same thing cannot be done by a junior engineer.</p>
+<p>Junior engineers keep getting stuck. They keep writing bad code through AI. Not writing code themselves, but through AI, they produce bad code.</p>
+<p>Why?</p>
+<p>Because the practices that have been followed in the organization for years are not recorded anywhere. Junior engineers have no idea how things actually work. They do not understand the why behind the patterns. They do not know what was tried before and failed. They do not know which tradeoffs were made and why.</p>
+<p>So they cannot prompt properly. They cannot give the right context. They cannot ship in time. There are more bugs. Retrospective meetings become painful. Bug meetings become archaeological expeditions.</p>
+<blockquote>
+<p>The product is becoming a black box. Not because of AI, but because of missing context.</p>
+</blockquote>
+<h2>The Real Problem With Agents Today</h2>
+<p>I was also talking to a couple of startups dealing with this exact issue. One of the founders mentioned something that stuck with me.</p>
+<p>They are paying for all the AI tools. They are paying for all the max models. They have access to the best infrastructure available.</p>
+<p>But still, agents are not delivering the speed they expected.</p>
+<p>The bar should be set so much higher than whatever people are doing right now. The thing should become autonomous. We should see a world where we are ideating, we are creating, we are the creators. The executors, the builders, the coders of the world, that is AI.</p>
+<p>And that is where everything changes. That is where real innovation starts happening.</p>
+<p>But we are not there yet. And the reason is not the models.</p>
+<h2>The Power of a System of Record</h2>
+<p>Here is where it gets interesting.</p>
+<p>There is a huge amount of power in how any team can adopt AI to a certain extent that they do not have to jump between different apps anymore. But only if they have a system of record.</p>
+<p>This is the main point.</p>
+<p>If there is a way where you can actually track all the irreversible actions that any senior person, or the founder, or someone else took over a period of time. If we can track what went right. What decision went wrong.</p>
+<p>And this is cross-product. Across customers. Across engineering.</p>
+<p>Think about what this actually means:</p>
+<ul>
+<li>Which features that customers wanted actually worked?</li>
+<li>Which features that customers wanted did not work?</li>
+<li>Which email that someone sent actually landed and got a response?</li>
+<li>Which email that someone else sent fell flat?</li>
+<li>Which PR that got merged worked well in production?</li>
+<li>Which things that did not get merged, what was actually wrong with them?</li>
+</ul>
+<p>If you can capture all of this, you have something powerful. You have context that compounds.</p>
+<blockquote>
+<p>That is where the power of a system of record comes in. That is where the power of context lives.</p>
+</blockquote>
+<h2>The Platform That Does Not Exist Yet</h2>
+<p>There is not a single platform today that can actually manage this context.</p>
+<p>And I think that is the major building block of where we should be heading. That is where all the AI companies and all the startups should actually set the bar. Only then can they achieve true agency.</p>
+<p>Let me explain why this matters so much.</p>
+<p>Right now, every tool captures a slice of what happens:</p>
+<ul>
+<li>Git captures code changes</li>
+<li>Linear captures tickets and intent</li>
+<li>Slack captures conversations</li>
+<li>Notion captures documents</li>
+<li>CRMs capture customer interactions</li>
+</ul>
+<p>But none of them capture the why behind irreversible decisions. None of them connect the dots across all these systems. None of them build a queryable, learnable record of what worked and what did not.</p>
+<p>So when a junior engineer sits down to build something, they are starting from scratch. They have the model. They have the tools. But they do not have the context.</p>
+<p>And without context, even the best model produces mediocre output.</p>
+<h2>The Git Analogy, But Deeper</h2>
+<p>Think about what git actually solved for code.</p>
+<p>Before git, code was chaos. Nobody knew who changed what. Rolling back was a nightmare. Collaboration was painful.</p>
+<p>Git introduced a system of record for code. Every change tracked. Every author known. Every commit message capturing intent.</p>
+<p>Now we need the same thing for decisions.</p>
+<p>Not just code decisions. All the irreversible actions that shape how a product evolves:</p>
+<ul>
+<li>Why did we build this feature and not that one?</li>
+<li>Why did we choose this architecture?</li>
+<li>Why did we send this email to that customer?</li>
+<li>Why did we reject this PR?</li>
+<li>Why did we hire this person?</li>
+<li>Why did we pivot away from that market?</li>
+</ul>
+<p>These decisions compound. They shape everything that comes after. But we do not record them. We do not make them queryable. We do not learn from them systematically.</p>
+<blockquote>
+<p>We have version control for code. We have nothing for the decisions that actually matter.</p>
+</blockquote>
+<h2>What This Enables</h2>
+<p>Imagine a world where this system of record exists.</p>
+<p>A junior engineer joins the team. Instead of spending months absorbing tribal knowledge through osmosis, they can query the decision history.</p>
+<p>&quot;Why do we structure our APIs this way?&quot;</p>
+<p>The system shows them the decision from two years ago. The context at the time. The alternatives considered. The tradeoffs made. The outcome that resulted.</p>
+<p>Now they understand. Now they can prompt properly. Now they can build on top of what came before instead of accidentally rebuilding what was already tried and failed.</p>
+<p>An agent is about to send an email to a customer. Instead of guessing what tone to use, it queries the decision history.</p>
+<p>&quot;What kind of emails have worked with this customer segment before?&quot;</p>
+<p>The system shows patterns. This approach got responses. This approach did not. This phrasing landed well. This phrasing fell flat.</p>
+<p>Now the agent has context. Now it can make a better decision. Now it can act with confidence.</p>
+<p>A founder is about to make a product decision. Instead of relying purely on intuition, they query the decision history.</p>
+<p>&quot;What happened the last three times we prioritized speed over reliability?&quot;</p>
+<p>The system shows the outcomes. Two times it worked. One time it caused a major incident. Here is what was different about the contexts.</p>
+<p>Now the decision is informed. Not just by gut feel, but by actual precedent.</p>
+<h2>The Bar We Should Be Setting</h2>
+<p>The bar should be this: true autonomy.</p>
+<p>Not agents that need constant babysitting. Not AI that produces code you have to review line by line. Not tools that make you faster at the same old process.</p>
+<p>True autonomy means:</p>
+<ul>
+<li>Agents that understand context without being told every time</li>
+<li>Systems that learn from what worked and what did not</li>
+<li>Decisions that are auditable and improvable</li>
+<li>Junior engineers who can operate at senior level because the context is available</li>
+<li>Founders who can move fast because the institutional memory is captured</li>
+</ul>
+<p>This is not science fiction. This is infrastructure that needs to be built.</p>
+<blockquote>
+<p>We should see a world where we are ideating, we are creating, we are the creators. The executors, the builders, the coders of the world is AI.</p>
+</blockquote>
+<p>But to get there, we need the missing layer. The system of record for context. The git for decisions.</p>
+<h2>What Needs to Happen</h2>
+<p>There are still so many things to do. So many things to build around AI to make sure all of this works.</p>
+<p>The models are ready. The compute is available. The tools are proliferating.</p>
+<p>What is missing is the connective tissue. The layer that captures why things happened, not just what happened. The layer that makes context available to everyone, human and AI alike.</p>
+<p>Whoever builds this layer will unlock the next phase of what is possible.</p>
+<p>Because right now, we have incredibly powerful models operating with incredibly thin context. That is like having a Formula 1 engine in a car with no steering wheel and no rearview mirror.</p>
+<p>The speed is there. The control is not.</p>
+<blockquote>
+<p>The platform that manages context across customers, engineering, and decisions, that is the real unlock. That is where true agency lives.</p>
+</blockquote>
+<h2>The Bottom Line</h2>
+<p>Software work changed. The middle collapsed. Building is no longer the bottleneck.</p>
+<p>But we traded one bottleneck for another.</p>
+<p>Now the bottleneck is context. The practices that nobody recorded. The decisions that nobody tracked. The why behind irreversible actions that lives only in the heads of people who were there.</p>
+<p>Fix that, and you fix the gap between where we are and where we should be.</p>
+<p>The junior engineer who cannot prompt properly? They do not need better prompting skills. They need access to the context that senior engineers have absorbed over years.</p>
+<p>The agents that are not delivering speed? They do not need better models. They need a system of record to learn from.</p>
+<p>The startups paying for all the tools but not seeing results? They do not need more tools. They need the layer that connects everything and captures what matters.</p>
+<p>This is the work. This is what needs to be built.</p>
+<p>And whoever builds it will define how the next decade of software work actually happens.</p>
+<p>Cheers.</p>
+
+    </div>
+    <div class="dash" style="margin-top:clamp(40px,5vw,64px)"></div>
+    <nav class="pnav" aria-label="More writing">
+      <a class="pn" href="/how-to-vibe-code-complex-softwares"><span>Older</span>How to vibe code complex software</a>
+      <a class="pn r" href="/built-claude-cowork-open-source-alternative-in-2-days"><span>Newer</span>I built an AI coworker in 2 days</a>
+    </nav>
+  </article>
+</main>
+
+<footer class="foot">
+  <span>© 2026 Akash Munshi · <a href="/">akashmunshi.com</a></span>
+  <span><a href="https://x.com/akashmunshi07">X</a> · <a href="https://www.linkedin.com/in/akash-munshi/">LinkedIn</a> · <a href="mailto:akashmunshi07@gmail.com">Email</a></span>
+</footer>
+
+</body>
+</html>

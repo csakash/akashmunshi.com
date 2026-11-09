@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From vibe coding to agentic engineering - Akash Munshi</title>
+<meta name="description" content="Most of what you want to build is CRUD. Learn the blocks, then let the agents do the heavy lifting.">
+<meta name="theme-color" content="#F4F3EE">
+<link rel="canonical" href="https://akashmunshi.com/from-vibe-coding-to-agentic-engineering">
+<meta property="og:type" content="article">
+<meta property="og:title" content="From vibe coding to agentic engineering">
+<meta property="og:description" content="Most of what you want to build is CRUD. Learn the blocks, then let the agents do the heavy lifting.">
+<meta property="og:url" content="https://akashmunshi.com/from-vibe-coding-to-agentic-engineering">
+<meta property="article:published_time" content="2026-02-26">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@akashmunshi07">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"From vibe coding to agentic engineering","description":"Most of what you want to build is CRUD. Learn the blocks, then let the agents do the heavy lifting.","datePublished":"2026-02-26","url":"https://akashmunshi.com/from-vibe-coding-to-agentic-engineering","author":{"@type":"Person","name":"Akash Munshi","url":"https://akashmunshi.com/"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f4f3ee; --ink:#121211; --ink2:#2b2b29; --muted:#6c6b66; --faint:#a3a29c;
+  --line:rgba(18,18,17,.24); --hair:rgba(18,18,17,.1); --tint:rgba(18,18,17,.05); --paper:#fcfbf8;
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --g:clamp(16px,4.4vw,72px); --pad:clamp(18px,2.4vw,40px);
+  --hdr:clamp(56px,4.6vw,72px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:clamp(16px,1.15vw,18px);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--ink);color:var(--bg)}
+.dash{height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 9px)}
+
+.hdr{position:sticky;top:0;z-index:50;height:var(--hdr);background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.hdr-in{height:100%;display:flex;align-items:center;padding-inline:var(--pad);gap:24px}
+.logo{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:clamp(17px,1.35vw,21px);letter-spacing:-.03em}
+.logo .mk{width:26px;height:26px;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:3px;display:grid;place-items:center;font:500 11px/1 var(--mono);letter-spacing:0}
+.back{margin-left:auto;font-size:14px;color:var(--ink2)}
+.back:hover{color:var(--ink)}
+
+.post{width:min(100% - 2*var(--g),720px);margin:0 auto;padding:clamp(40px,6vw,88px) 0 clamp(40px,5vw,72px)}
+.meta{font:400 12.5px/1.6 var(--mono);color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+h1.t{font-family:var(--display);font-weight:400;font-size:clamp(32px,4vw,56px);line-height:1.06;letter-spacing:-.028em;margin:14px 0 18px}
+.lede{color:var(--muted);font-size:clamp(17px,1.3vw,20px);line-height:1.5;padding-bottom:clamp(28px,3vw,40px)}
+
+.prose{padding-top:clamp(28px,3vw,40px);color:var(--ink2)}
+.prose>*+*{margin-top:1.1em}
+.prose h2{font-family:var(--display);font-weight:500;font-size:clamp(22px,1.8vw,28px);line-height:1.2;letter-spacing:-.018em;color:var(--ink);margin-top:2em}
+.prose h3{font-family:var(--display);font-weight:500;font-size:clamp(18px,1.4vw,21px);line-height:1.3;letter-spacing:-.01em;color:var(--ink);margin-top:1.7em}
+.prose h4{font-weight:600;color:var(--ink);margin-top:1.5em}
+.prose strong{color:var(--ink);font-weight:600}
+.prose a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.prose a:hover{text-decoration-color:var(--ink)}
+.prose ul,.prose ol{padding-left:1.3em}
+.prose li+li{margin-top:.35em}
+.prose li::marker{color:var(--muted)}
+.prose blockquote{border-left:2px solid var(--ink);padding:.2em 0 .2em 1.1em;color:var(--ink)}
+.prose code{font-family:var(--mono);font-size:.86em;background:var(--tint);padding:.12em .36em;border-radius:3px}
+.prose pre{background:#121211;color:#e9e8e2;padding:16px 18px;border-radius:2px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+.prose pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.prose img{display:block;max-width:100%;height:auto;margin-inline:auto;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:6px;margin-block:1.8em}
+.prose hr{border:0;height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 9px);margin:2.2em 0}
+.prose table{width:100%;border-collapse:collapse;font-size:.92em}
+.prose th,.prose td{text-align:left;padding:8px 10px;border-bottom:1px dashed var(--line)}
+.embed{position:relative;aspect-ratio:16/9;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:6px;margin-block:1.8em!important;background:#121211}
+.embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+.pnav{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:clamp(40px,5vw,64px);padding-top:24px}
+.pn{display:block;font-family:var(--display);font-size:16px;line-height:1.35;letter-spacing:-.01em}
+.pn span{display:block;font:400 11.5px/1 var(--mono);color:var(--muted);margin-bottom:8px}
+.pn:hover{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.pn.r{text-align:right}
+.foot{width:min(100% - 2*var(--g),720px);margin:0 auto;padding:28px 0 40px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font:400 12px/1.6 var(--mono);color:var(--faint)}
+.foot a:hover{color:var(--ink)}
+@media (max-width:600px){.pnav{grid-template-columns:1fr}.pn.r{text-align:left}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="logo" href="/" aria-label="Akash Munshi, home"><span class="mk">AM</span><span>Akash Munshi</span></a>
+    <a class="back" href="/#writing">← All writing</a>
+  </div>
+  <div class="dash" style="opacity:.6"></div>
+</header>
+
+<main>
+  <article class="post">
+    <div class="meta"><time datetime="2026-02-26">26 Feb 2026</time><span>2 min read</span></div>
+    <h1 class="t">From vibe coding to agentic engineering</h1>
+    <p class="lede">Most of what you want to build is CRUD. Learn the blocks, then let the agents do the heavy lifting.</p>
+    <div class="dash"></div>
+    <div class="prose">
+<p>Recently Peter from OpenClaw talked about his preference of not using the term vibe coding instead use the term Agentic Engineering. But are these two things the same?</p>
+<p>The answer is no.</p>
+<p>I know that a lot of non technical people has picked up vibe coding recently. Specially the AI models becoming more reliable in generating code, building is becoming like a hobby for all the non tech folks and it feels like a magic. I do appreciate this excitement and urge to build things but people should start spending more time on what to build and whats the best practice to build this.</p>
+<p>I am not asking people to go deeper and understand the intricacies of engineering. But there are couple of things that can actually take you from a Vibe Coder to an Agentic Engineer.</p>
+<p>To start with I would really recommend you to go through the <a href="/how-to-vibe-code-complex-softwares">How to vibe code</a> article. If you are a technical person you can skip this part. In this article you will get a fare understanding of some key parts about building a software. Now to being with, most of the projects that will come to your mind atleast 90% of the features that you are thinking can be done with simple <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete" target="_blank" rel="noopener">CRUD</a> features. This involves the following</p>
+<ul>
+<li>Signup/Login functionalities</li>
+<li>Creating, editing and deleting something from app</li>
+<li>Communication layer (Sending an email, slack message or different integrations)</li>
+</ul>
+<p>Apart from these there are certain things that actually makes your app really proactive are the following</p>
+<ul>
+<li>Webhooks - Sending or Receiving data to/from 3rd party apps</li>
+<li>Periodic Operations / Polling - Checking daily changes in 3rd party apps</li>
+<li>Cron - Running a scheduled operation in your system like sending a progress report of your Todo list at the end of the day in your mail</li>
+<li>Pub/Sub - This is more like if you want to constantly listen to some particular change in your/third party app and perform some action when it happens. Think of it like whenever you install Netflix in your phone, then Netflix subscribes you to a notification channel that informs you about all the upcoming movies.</li>
+</ul>
+<p>I know I went a little too far. But to create really useful products these are some things that you need to be aware of and by using these you actually start the journey from Vibe Coding to Agentic Engineering. But you probably be thinking, I have already built similar things without knowing about all these. True, but when you know the right terms you will probably spend less time fighting with AI and more time vibing with it.</p>
+<p>Well now that we know these things, I want you to ask these questions before you build any apps.</p>
+
+    </div>
+    <div class="dash" style="margin-top:clamp(40px,5vw,64px)"></div>
+    <nav class="pnav" aria-label="More writing">
+      <a class="pn" href="/learn-new-things-in-ai"><span>Older</span>How to learn new things in AI with AI</a>
+      <a class="pn r" href="/a-truly-autonomous-general-developer-agent"><span>Newer</span>The time of a truly autonomous general developer agent is here</a>
+    </nav>
+  </article>
+</main>
+
+<footer class="foot">
+  <span>© 2026 Akash Munshi · <a href="/">akashmunshi.com</a></span>
+  <span><a href="https://x.com/akashmunshi07">X</a> · <a href="https://www.linkedin.com/in/akash-munshi/">LinkedIn</a> · <a href="mailto:akashmunshi07@gmail.com">Email</a></span>
+</footer>
+
+</body>
+</html>

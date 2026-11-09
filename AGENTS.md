@@ -24,6 +24,11 @@ Rules for content:
 - No product previews, mockups or screenshots of client products. Text only.
 - No revenue figures, and no commit or PR counts for client work.
 
+## Essays
+
+- Each essay is one page at `public/<slug>.html`, served at `akashmunshi.com/<slug>`. Never change a slug: these URLs were live on the old site and are linked from elsewhere.
+- To add an essay, copy an existing essay page, change the title, description, dates, canonical URL and body, put any images in `public/images/`, link the previous newest essay to it in the Older/Newer nav, and add a row at the top of Writing in `public/index.html`.
+
 ## Voice
 
 - First person, plain words, short sentences.
