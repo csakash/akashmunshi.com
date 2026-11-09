@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akash Munshi</title>
+<meta name="description" content="Akash Munshi builds AI agents and the loops that ship them. Two-time founder (one exit), runs Motiontic, a solo applied AI lab in Bengaluru.">
+<meta name="theme-color" content="#F4F3EE">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Akash Munshi - building agents for a living">
+<meta property="og:description" content="Agents, loops and the products they ship. Two-time founder, one exit. Motiontic, a solo applied AI lab.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@akashmunshi07">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Akash Munshi","url":"https://akashmunshi.com/","jobTitle":"Founder, Motiontic","address":{"@type":"PostalAddress","addressLocality":"Bengaluru","addressCountry":"IN"},"sameAs":["https://github.com/csakash","https://x.com/akashmunshi07","https://www.linkedin.com/in/akash-munshi"]}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Inter+Tight:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Architects+Daughter&display=swap">
+<style>
+:root{
+  --bg:#f4f3ee; --ink:#121211; --ink2:#2b2b29; --muted:#6c6b66; --faint:#a3a29c;
+  --line:rgba(18,18,17,.24); --hair:rgba(18,18,17,.1); --tint:rgba(18,18,17,.05); --ok:#2f6b41;
+  --paper:#fcfbf8;
+  --sans:"Inter","Inter Fallback",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --display:"Inter Tight","Inter Tight Fallback","Inter",ui-sans-serif,system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --g:clamp(16px,4.4vw,72px); --pad:clamp(18px,2.4vw,40px); --sp:clamp(36px,4.5vw,72px);
+  --fs-h1:clamp(40px,5.2vw,84px); --fs-h2:clamp(26px,2.5vw,42px);
+  --fs-body:clamp(14px,1.1vw,17px); --fs-small:clamp(12px,.86vw,13.5px); --fs-nav:clamp(13px,.95vw,15px);
+  --hdr:clamp(56px,4.6vw,72px);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:106.3%;ascent-override:91.1%;descent-override:22.8%;line-gap-override:0%}
+@font-face{font-family:"Inter Tight Fallback";src:local("Arial");size-adjust:95.9%;ascent-override:101%;descent-override:25.3%;line-gap-override:0%}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:var(--fs-body);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+section,footer{position:relative;scroll-margin-top:var(--hdr)}
+.wrap{width:min(100% - 2*var(--g),1440px);margin-inline:auto;position:relative}
+::selection{background:var(--ink);color:var(--bg)}
+
+/* dashed hairlines */
+.hl{position:absolute;pointer-events:none;z-index:1;height:1px;left:0;right:0;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 9px);transform:scaleX(0);transform-origin:left;transition:transform 1.6s var(--ease) var(--d,0s)}
+.hl.in{transform:none}
+.bl{position:relative}
+.bl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:repeating-linear-gradient(180deg,var(--line) 0 4px,transparent 4px 9px);transform:scaleY(0);transform-origin:top;transition:transform 1.8s var(--ease) .15s;z-index:1}
+.bl.in::before{transform:none}
+
+/* reveal */
+.r{opacity:0;transform:translateY(14px);transition:opacity 1s var(--ease) var(--d,0s),transform 1s var(--ease) var(--d,0s)}
+.r.in{opacity:1;transform:none}
+.ln{display:block;overflow:hidden;padding-bottom:.12em;margin-bottom:-.12em}
+.ln>span{display:inline-block;transform:translateY(112%);transition:transform 1.15s var(--ease) var(--d,0s)}
+.in .ln>span{transform:none}
+
+/* type */
+.h1{font-family:var(--display);font-weight:400;font-size:var(--fs-h1);line-height:1.02;letter-spacing:-.03em}
+.h2{font-family:var(--display);font-weight:400;font-size:var(--fs-h2);line-height:1.1;letter-spacing:-.022em}
+.h3{font-family:var(--display);font-weight:500;font-size:clamp(18px,1.45vw,23px);line-height:1.2;letter-spacing:-.015em}
+.label{font-size:var(--fs-small);color:var(--muted);margin-bottom:clamp(10px,1.2vw,16px);display:block}
+.lead{color:var(--muted);max-width:60ch}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.prose p+p{margin-top:.9em}
+.ul{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;transition:text-decoration-color .2s}
+.ul:hover{text-decoration-color:var(--ink)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--bg);font-size:var(--fs-nav);padding:.72em 1.15em;border-radius:2px;transition:background .25s}
+.btn:hover{background:#34342f}
+.tlink{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-small);color:var(--ink)}
+.tlink svg{width:10px;height:10px;transition:transform .35s var(--ease)}
+.tlink:hover svg{transform:translate(2px,-2px)}
+
+/* header */
+.hdr{position:sticky;top:0;z-index:50;height:var(--hdr);background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:box-shadow .4s}
+.hdr.scrolled{box-shadow:0 1px 0 var(--hair)}
+.hdr-in{height:100%;display:flex;align-items:center;padding-inline:var(--pad);gap:24px}
+.logo{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:clamp(17px,1.35vw,21px);letter-spacing:-.03em}
+.logo .mk{width:26px;height:26px;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:3px;display:grid;place-items:center;font:500 11px/1 var(--mono);letter-spacing:0}
+.nav{margin-left:auto;display:flex;gap:clamp(18px,3vw,44px);font-size:var(--fs-nav);color:var(--ink2)}
+.nav a{position:relative;padding:4px 0}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
+.nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.hdr .btn{margin-left:clamp(12px,3vw,44px)}
+.menu{display:none;font-size:var(--fs-nav);padding:8px 2px;margin-left:auto}
+
+/* grid */
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.span2{grid-column:span 2}.span3{grid-column:span 3}
+.cell{padding:var(--sp) var(--pad)}
+.cell.tight{padding-block:clamp(22px,2.4vw,36px)}
+
+/* hero */
+.hero .cell{padding-top:clamp(40px,6vw,96px);padding-bottom:clamp(36px,4.5vw,72px)}
+.hero .h1{max-width:15ch}
+.hero .lead{margin-top:clamp(20px,2vw,32px);font-size:clamp(15px,1.25vw,19px);color:var(--ink2);max-width:56ch}
+.socials{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:clamp(24px,2.6vw,40px);font-size:var(--fs-nav)}
+.socials a{display:inline-flex;align-items:center;gap:7px;color:var(--ink2)}
+.socials a svg{width:14px;height:14px}
+.socials a:hover{color:var(--ink)}
+.hero-side{display:flex;flex-direction:column;justify-content:flex-end}
+.portrait{position:relative;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:7px;background:var(--paper);aspect-ratio:4/5;max-width:300px;width:100%;overflow:hidden}
+.portrait .sk{position:absolute;inset:0;width:100%;height:100%}
+.portrait figcaption{position:absolute;right:10px;top:9px;font:400 11px/1 var(--mono);color:var(--muted)}
+
+/* stats */
+.stats .cell{padding-block:clamp(22px,2.6vw,40px)}
+.stat b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(30px,3.2vw,54px);letter-spacing:-.03em;line-height:1}
+.stat span{display:block;color:var(--muted);font-size:var(--fs-small);margin-top:10px;max-width:24ch}
+
+/* tags */
+.tag{display:inline-flex;align-items:center;gap:6px;font:400 11px/1 var(--mono);color:var(--ink2);border:1px dashed var(--line);padding:5px 7px;border-radius:2px;white-space:nowrap}
+.tag.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.tag.ink{background:var(--ink);color:var(--bg);border:1px solid var(--ink)}
+
+/* experiments: the card grid */
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px dashed var(--line);border-left:1px dashed var(--line)}
+.xp{padding:clamp(18px,1.8vw,28px) var(--pad);border-right:1px dashed var(--line);border-bottom:1px dashed var(--line);display:flex;flex-direction:column;gap:8px}
+.xp .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.xp .n{font:400 11px/1 var(--mono);color:var(--faint)}
+.xp h3{font-family:var(--display);font-weight:500;font-size:clamp(16px,1.25vw,20px);letter-spacing:-.012em;line-height:1.25}
+.xp p{font-size:var(--fs-small);color:var(--muted);line-height:1.55}
+.xp .k{font:400 11px/1.5 var(--mono);color:var(--ink2);margin-top:auto;padding-top:6px}
+.xp.hi{background:var(--tint)}
+.xp.hi h3{font-size:clamp(20px,1.8vw,28px)}
+.xp.hi p{font-size:var(--fs-body);color:var(--ink2);max-width:62ch}
+.xp.hi .nums{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:4px}
+.xp.hi .nums b{font-family:var(--display);font-weight:400;font-size:clamp(20px,1.7vw,28px);letter-spacing:-.02em;display:block;line-height:1.1}
+.xp.hi .nums span{font-size:11.5px;color:var(--muted)}
+
+/* work history */
+.jobs{list-style:none}
+.job{display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 28px;padding:clamp(18px,2vw,28px) 0;border-top:1px dashed var(--line)}
+.job:last-child{border-bottom:1px dashed var(--line)}
+.job .when{font:400 12px/1.6 var(--mono);color:var(--muted)}
+.job .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.job .role{font:400 12px/1 var(--mono);color:var(--ink2)}
+.job p{color:var(--muted);margin-top:6px;max-width:72ch}
+.job .pts{list-style:none;display:grid;gap:5px;margin-top:10px;font-size:var(--fs-small);color:var(--ink2);max-width:80ch}
+.job .pts li{padding-left:16px;position:relative}
+.job .pts li::before{content:"";position:absolute;left:0;top:.68em;width:8px;height:1px;background:var(--ink)}
+.clients{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair);margin-top:16px}
+.client{background:var(--bg);padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.client .ch{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.client h4{font-family:var(--display);font-weight:500;font-size:clamp(16px,1.2vw,19px);letter-spacing:-.01em}
+.client p{margin:0;font-size:var(--fs-small);line-height:1.55}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:var(--fs-small);color:var(--muted)}
+.legend b{font-weight:500;color:var(--ink)}
+
+/* rows (writing) */
+.rows{list-style:none}
+.rows li{border-top:1px dashed var(--line)}
+.rows li:last-child{border-bottom:1px dashed var(--line)}
+.rows a{display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:8px 24px;align-items:baseline;padding:15px 4px;transition:background .25s}
+.rows a:hover{background:var(--tint)}
+.rows .d{font:400 12px/1.4 var(--mono);color:var(--muted)}
+.rows .t{font-family:var(--display);font-size:clamp(16px,1.25vw,19px);letter-spacing:-.01em;line-height:1.25}
+.rows .t small{display:block;font-family:var(--sans);font-size:var(--fs-small);color:var(--muted);letter-spacing:0;margin-top:4px;line-height:1.45}
+.rows .x{font:400 11px/1 var(--mono);color:var(--muted);white-space:nowrap}
+
+/* timeline */
+.tl{list-style:none}
+.tl li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 28px;padding:15px 0;border-top:1px dashed var(--line)}
+.tl li:last-child{border-bottom:1px dashed var(--line)}
+.tl .when{font:400 12px/1.6 var(--mono);color:var(--muted)}
+.tl .what b{font-family:var(--display);font-weight:500;font-size:clamp(15px,1.2vw,19px);letter-spacing:-.01em;display:block;line-height:1.3}
+.tl .what span{color:var(--muted);font-size:var(--fs-small);display:block;margin-top:3px;max-width:75ch}
+.tl li.big .what b::after{content:"";display:inline-block;width:7px;height:7px;background:var(--ink);margin-left:10px;vertical-align:middle}
+
+/* footer */
+.foot .cell{padding-block:clamp(40px,4.5vw,72px)}
+.foot .big{font-family:var(--display);font-size:clamp(30px,3.6vw,60px);letter-spacing:-.03em;line-height:1.05}
+.foot ul{list-style:none;display:grid;gap:10px;color:var(--muted)}
+.foot ul a:hover{color:var(--ink)}
+.foot ul.made a{color:var(--ink)}
+.foot ul.made small{display:block;font-size:var(--fs-small);color:var(--muted)}
+.colophon{font:400 11px/1.6 var(--mono);color:var(--faint);padding:0 var(--pad) 28px}
+
+/* pencil sketch */
+.sk{overflow:visible}
+.sk path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s var(--ease) var(--dl,0s)}
+.sk.in path{stroke-dashoffset:0}
+.sk text{opacity:0;transition:opacity .8s ease 1.1s}
+.sk.in text{opacity:1}
+
+@media (max-width:1100px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards .span3,.cards .span2,.cards .xp:nth-child(2){grid-column:1/-1}
+}
+@media (max-width:900px){
+  .nav,.hdr .btn{display:none}
+  .menu{display:block}
+  .hdr.open .nav{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);padding:8px var(--g) 16px;box-shadow:0 1px 0 var(--hair)}
+  .hdr.open .nav a{padding:12px 0}
+  .grid4{grid-template-columns:minmax(0,1fr)}
+  .span2,.span3{grid-column:auto}
+  .bl::before{left:0;right:0;top:0;bottom:auto;width:auto;height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 9px);transform:scaleX(0);transform-origin:left}
+  .bl.in::before{transform:none}
+  .stats .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .clients{grid-template-columns:minmax(0,1fr)}
+  .job,.tl li{grid-template-columns:minmax(0,1fr);gap:4px}
+  .rows a{grid-template-columns:minmax(0,1fr);gap:4px}
+  .rows .x{display:none}
+  .portrait{max-width:220px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .r,.ln>span,.hl,.bl::before{opacity:1!important;transform:none!important}
+  .sk path{stroke-dashoffset:0!important}.sk text{opacity:1!important}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a class="logo" href="#top" aria-label="Akash Munshi, home"><span class="mk">AM</span><span>Akash Munshi</span></a>
+    <nav class="nav" id="nav" aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#lab">Lab</a>
+      <a href="#writing">Writing</a>
+      <a href="#journey">Journey</a>
+      <a href="#about">About</a>
+    </nav>
+    <a class="btn" href="mailto:akashmunshi07@gmail.com">Say hello</a>
+    <button class="menu" id="menu" aria-expanded="false" aria-controls="nav">Menu</button>
+  </div>
+  <i class="hl in" style="bottom:0;opacity:.6"></i>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap grid4" data-r>
+    <div class="cell span3">
+      <span class="label r" data-r>Bengaluru, India · building agents for a living</span>
+      <h1 class="h1">
+        <span class="ln"><span>Hi, I'm Akash.</span></span>
+        <span class="ln"><span style="--d:.08s">I build agents, and</span></span>
+        <span class="ln"><span style="--d:.16s">the loops that ship them.</span></span>
+      </h1>
+      <p class="lead r" data-r style="--d:.3s">Two-time founder (one exit), ex Senior ML Engineer at mirrAR and Founding Engineer at a YC company. Since October 2025 I run <b>Motiontic</b>, a solo applied AI lab: I work inside startup teams as an AI lead, founding engineer or product engineer, and run my own experiments on the side. I work in Claude Code and Codex, with 5 to 6 agents running in parallel loops on a normal day.</p>
+      <div class="socials r" data-r style="--d:.4s">
+        <a href="https://github.com/csakash"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.67.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0z"/></svg>github/csakash</a>
+        <a href="https://x.com/akashmunshi07"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M12.6 1h2.4L9.8 7l6.2 8h-4.8L7.4 10l-4.4 5H.6l5.6-6.4L.2 1h4.9l3.4 4.5L12.6 1zm-.8 12.6h1.3L4.3 2.3H2.9l8.9 11.3z"/></svg>@akashmunshi07</a>
+        <a href="https://www.linkedin.com/in/akash-munshi/"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 1.15C0 .52.52 0 1.18 0h13.64C15.48 0 16 .52 16 1.15v13.7c0 .63-.52 1.15-1.18 1.15H1.18C.52 16 0 15.48 0 14.85V1.15zm4.9 12.24V6.17H2.5v7.22h2.4zM3.7 5.18c.84 0 1.36-.55 1.36-1.25-.02-.71-.52-1.25-1.34-1.25-.82 0-1.36.54-1.36 1.25 0 .7.52 1.25 1.33 1.25h.01zm2.5 8.21h2.4V9.36c0-.22.02-.43.08-.59.17-.43.57-.88 1.23-.88.87 0 1.22.66 1.22 1.63v3.87h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.3 0-1.86.72-2.18 1.21V6.17H6.2c.03.68 0 7.22 0 7.22z"/></svg>LinkedIn</a>
+        <a href="mailto:akashmunshi07@gmail.com"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="1" y="3" width="14" height="10" rx="1"/><path d="M1.5 3.5 8 9l6.5-5.5"/></svg>akashmunshi07@gmail.com</a>
+      </div>
+    </div>
+    <div class="cell hero-side bl">
+      <figure class="portrait r" data-r style="--d:.2s">
+        <svg class="sk" id="sk-desk" aria-hidden="true"></svg>
+        <figcaption>fig. 1 - a normal tuesday</figcaption>
+      </figure>
+    </div>
+  </div>
+  <i class="hl" data-r style="bottom:0"></i>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats" aria-label="In numbers">
+  <div class="wrap grid4">
+    <div class="cell stat r" data-r><b data-count="1000" data-suffix="+">1000+</b><span>PRs shipped through gstack-loops, up to 40 in a day</span></div>
+    <div class="cell stat bl r" data-r style="--d:.08s"><b data-count="5" data-suffix="+">5+</b><span>startups shipping agents built by Motiontic</span></div>
+    <div class="cell stat bl r" data-r style="--d:.16s"><b data-count="8">8</b><span>years building: two startups, one acquired in 2023</span></div>
+    <div class="cell stat bl r" data-r style="--d:.24s"><b data-count="300" data-suffix="+">300+</b><span>members in GTM Machines, the community I run</span></div>
+  </div>
+  <i class="hl" data-r style="bottom:0"></i>
+</section>
+
+<!-- ============ 01 WORK ============ -->
+<section id="work">
+  <div class="wrap grid4">
+    <div class="cell"><span class="label r" data-r>01 · Work</span><p class="muted r" data-r style="--d:.1s;font-size:var(--fs-small);max-width:24ch">Where I've worked, newest first.</p></div>
+    <div class="cell span3 bl">
+      <ol class="jobs r" data-r>
+
+        <li class="job">
+          <span class="when">Oct 2025 - now</span>
+          <div>
+            <div class="head"><h3 class="h3">Motiontic</h3><span class="role">Founder · solo applied AI lab</span></div>
+            <p>I embed with startups in India and the US and ship agents and AI products into production, in the role each team needs.</p>
+            <div class="legend"><span><b>AI lead</b>: owns the AI work inside the client's team</span><span><b>Founding engineer</b>: first engineer on a new product</span><span><b>Product engineer</b>: owns a product end to end</span></div>
+            <div class="clients">
+              <div class="client">
+                <div class="ch"><h4>Quantum Heaps</h4><span class="tag ink">AI engineer · AI lead</span></div>
+                <p class="muted">Built an agentic revenue harness for AgentQ, their agentic CRM, that runs pipeline, inbound and outbound for salespeople.</p>
+              </div>
+              <div class="client">
+                <div class="ch"><h4>PulseCorp</h4><span class="tag ink">Founding engineer</span></div>
+                <p class="muted">Pulse, an AI user research platform. Launched a real-time UX interview agent that reads speech, video reactions and clicks and asks follow-up questions, plus theme and sentiment extraction and Slack, HubSpot and analytics integrations. Cleared security reviews for Remitly in 7 days and Groww in 5.</p>
+              </div>
+              <div class="client">
+                <div class="ch"><h4>NeevCloud</h4><span class="tag ink">Product engineer · Fring</span></div>
+                <p class="muted">Fring, a coding harness across desktop, CLI, VS Code and web. Built a 50-person superuser cohort that drives activation and turns power users into a feedback and distribution loop.</p>
+              </div>
+              <div class="client">
+                <div class="ch"><h4>Bloom Markets</h4><span class="tag ink">AI content</span></div>
+                <p class="muted">An agentic video and influencer harness that any marketer with basic Claude Code or Codex skills can run: 20+ accounts posting around the clock, 10K+ daily views from accounts under 100 followers.</p>
+              </div>
+              <div class="client" style="grid-column:1/-1">
+                <div class="ch"><h4>mirrAR</h4><span class="tag ink">AI lead</span></div>
+                <p class="muted">Led AI as a client of Motiontic, separate from my years on staff. Manufacturing agents for a 150-person team: an email order agent handling 500 orders a day, a QC agent checking 200+ deliveries a day against purchase orders, and a spec-sheet-to-SKU pipeline.</p>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="job">
+          <span class="when">Jun 2025 - Sep 2025</span>
+          <div>
+            <div class="head"><h3 class="h3">Narrative (YC W23)</h3><span class="role">Founding engineer</span></div>
+            <p>A testing platform where AI browser agents run end-to-end tests. I built the browser infrastructure underneath it.</p>
+            <ul class="pts">
+              <li>Remote-browser infrastructure on AWS: a pool of streamed browser sessions (NICE DCV) with near real-time interaction, so users could watch and debug agent tests live</li>
+              <li>Hundreds of parallel test runs per organisation: atomic session pool, autoscaling after inactivity, isolated and incognito sessions, race-free session assignment and cleanup</li>
+              <li>A recorder for no-code test creation, browser automation to run tests, and replay to debug them</li>
+              <li>Monitoring with Prometheus, CloudWatch and Sentry; GitHub and Slack integrations</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="job">
+          <span class="when">Nov 2023 - May 2025</span>
+          <div>
+            <div class="head"><h3 class="h3">mirrAR</h3><span class="role">Machine Learning Engineer → Senior ML Engineer · employee</span></div>
+            <p>Virtual try-on and generative AI for beauty, jewellery and fashion brands.</p>
+            <ul class="pts">
+              <li>Started with StyleGAN hairstyle transfer for clients like Lakmé, and an iOS ARKit SDK for in-store partners</li>
+              <li>Moved into generative AI: jewellery try-on, cloth try-on (10K+ try-ons a month on a 500K-visitor site), and AI jewellery design software (Spark, now used by 5+ enterprise customers)</li>
+              <li>Led the Rad Beauty product for six months with a team of 7 to 8: AI try-on cut client photoshoot costs by 60% and grew the app 4x in downloads and 160% in DAU in three months</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="job">
+          <span class="when">Jul 2020 - Oct 2023</span>
+          <div>
+            <div class="head"><h3 class="h3">Durbin Technologies</h3><span class="role">Co-founder &amp; CTO · acquired</span></div>
+            <p>Raised $125K and scaled an AI-enabled IoT asset-tracking platform from zero to acquisition: 500+ locations across India and a team of 10. Turned 2M+ daily telematics events into decisions (15% faster turnaround) and delivered LiDAR railway mapping for Indian Railways.</p>
+          </div>
+        </li>
+
+        <li class="job">
+          <span class="when">May 2018 - Jun 2020</span>
+          <div>
+            <div class="head"><h3 class="h3">Quinch Systems</h3><span class="role">Co-founder</span></div>
+            <p>Computer vision for industrial sites, started in college, for Skipper, Linde and Indian Railways. It led directly to Durbin.</p>
+          </div>
+        </li>
+
+      </ol>
+    </div>
+  </div>
+  <i class="hl" data-r style="bottom:0"></i>
+</section>
+
+<!-- ============ 02 LAB ============ -->
+<section id="lab">
+  <div class="wrap grid4">
+    <div class="cell tight"><span class="label r" data-r>02 · Motiontic lab</span></div>
+    <div class="cell tight span3 bl">
+      <h2 class="h2"><span class="ln"><span>Motiontic is a solo applied AI lab.</span></span></h2>
+      <p class="lead r" data-r style="--d:.15s;margin-top:12px">Since October 2025 the lab has two halves. <b>Client work</b>: I join a startup's team as an AI lead, founding engineer or product engineer and ship agents into production (above, under <a class="ul" href="#work">Work</a>). <b>Experiments</b>: everything below, most active first. Some became products, some stayed research.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="cards r" data-r>
+
+      <article class="xp hi span3">
+        <div class="top"><span class="n">01 · research</span><span class="tag live">edition 1 out</span></div>
+        <h3>ARI-42, Agent Risk Index</h3>
+        <p>An open index of the 42 security requirements a product built on AI agents should meet, with evidence-linked ratings of how far 85 widely used agent frameworks, SDKs, harnesses and MCP tools take a builder toward each one. Every requirement is tied to the 2025-26 CVE and incident record that motivates it, and cross-walked to OWASP, MITRE ATLAS, CoSAI and ISO.</p>
+        <div class="nums">
+          <div><b>85</b><span>agent tools rated</span></div>
+          <div><b>2,099</b><span>ratings, each with a source</span></div>
+          <div><b>129,058</b><span>CVEs screened</span></div>
+          <div><b>759</b><span>AI incidents reviewed</span></div>
+        </div>
+        <span class="k">Finding: tools meet a requirement by default in 2% of cases.</span>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">02</span><span class="tag">building</span></div>
+        <h3>GLoop</h3>
+        <p>One chat for every coding agent and loop on your machine. You talk to one router agent; it writes the loop prompt for the right project and only interrupts you when a decision is yours. gstack-loops v2.</p>
+      </article>
+
+      <article class="xp hi span2">
+        <div class="top"><span class="n">03 · most used</span><span class="tag live">used by developers</span></div>
+        <h3>gstack-loops</h3>
+        <p>A loop engineering kit built on gstack. Run as many feature loops in parallel as you want: each gets its own worktree, its own set of ports so parallel builds never collide, and its own QA run. A loop goes spec → build → review → QA → ship and keeps going until the tests pass, so it finishes the whole development cycle and hands you a PR.</p>
+        <div class="nums">
+          <div><b>1000+</b><span>PRs shipped</span></div>
+          <div><b>40</b><span>PRs in a day, my best</span></div>
+        </div>
+        <a class="tlink" href="https://github.com/csakash/gstack-loops">github.com/csakash/gstack-loops <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">04</span><span class="tag live">100+ users · 3 paying</span></div>
+        <h3>Drevon</h3>
+        <p>An AI GTM engineer that runs inside your own browser, on your own logins, and returns prospect lists where every row links to its source.</p>
+        <a class="tlink" href="https://drevon.dev">drevon.dev <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">05</span><span class="tag live">live with 2 startups</span></div>
+        <h3>Intraface</h3>
+        <p>The shared context layer for humans and agents: one live page that every teammate's coding agent pulls, follows and publishes back to. This portfolio is a board on it.</p>
+        <a class="tlink" href="https://intraface.cc">intraface.cc <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">06</span><span class="tag">building</span></div>
+        <h3>Uno Code</h3>
+        <p>A terminal coding agent written from scratch in Rust, aiming to match the leading harnesses while starting faster, using less memory and spending fewer tokens.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">07</span><span class="tag">building</span></div>
+        <h3>Witness</h3>
+        <p>Deploys a feature's whole stack, across every repo and PR it needs, into one cloud sandbox, then hands the URL to Claude Code once every service is healthy.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">08</span><span class="tag">500+ users</span></div>
+        <h3>Sudosu</h3>
+        <p>An AI workspace with 100+ integrations and a Python CLI. Connect Gmail, Slack and Linear and build agents for long-running tasks.</p>
+        <a class="tlink" href="https://pypi.org/project/sudosu/">pip install sudosu <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">09</span><span class="tag">open source</span></div>
+        <h3>Creator Foundry</h3>
+        <p>An AI content creator framework. Generates UGC video at scale with Higgsfield or fal.ai, manages many devices and the Instagram accounts on them, and automates posting end to end.</p>
+        <a class="tlink" href="https://github.com/csakash/foundry">GitHub <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">10</span><span class="tag">computer use</span></div>
+        <h3>Jev playground</h3>
+        <p>Computer use with TypeSafe's Jev decision model: Jev makes the typed judgements (yes/no, choices, scores with calibrated probabilities) while my code drives the browser. Use cases for lead generation, a browser agent, a game agent and ad-library research.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">11</span><span class="tag">npm: legendai</span></div>
+        <h3>Legend</h3>
+        <p>A coding agent that runs Linear from Slack through a six-stage pipeline. It let a CSM who doesn't code ship 70+ production PRs in a month.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">12</span><span class="tag">spec</span></div>
+        <h3>BranchDB</h3>
+        <p>A database with branching built in, and native vector search as the second selling point.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">13</span><span class="tag">open source</span></div>
+        <h3>Launch Film Kit</h3>
+        <p>Launch films that are clear on first watch. Claude writes and directs, ElevenLabs voices and scores, HyperFrames renders.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">14</span><span class="tag">done</span></div>
+        <h3>Greenlight</h3>
+        <p>An agent-run security and compliance gate, and the research behind it into the gaps in today's agentic AI vendor reviews. Led to ARI-42.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">15</span><span class="tag">building</span></div>
+        <h3>Panelist app</h3>
+        <p>An app for people who get paid to take part in research studies: verified, one account per person.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">16</span><span class="tag">building</span></div>
+        <h3>SkillHunt</h3>
+        <p>Product Hunt for AI skills: discover, upvote and install skills for Claude Code and Codex.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">17</span><span class="tag">done</span></div>
+        <h3>Glassbox</h3>
+        <p>Live hiring screens: watch candidates work with coding agents inside a deliberately broken codebase, then get an evidence-linked report.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">18</span><span class="tag">prototype</span></div>
+        <h3>Proactive Agents</h3>
+        <p>An agent engine on LangGraph that acts before you ask: it watches Linear and your tools and relays work to a native app.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">19</span><span class="tag">prototype</span></div>
+        <h3>AgenticMail</h3>
+        <p>An AI inbox with real-time sync, folder filtering, attachments and suggested replies.</p>
+      </article>
+
+      <article class="xp">
+        <div class="top"><span class="n">20</span><span class="tag">prototype</span></div>
+        <h3>Hiroscope</h3>
+        <p>AI recruiting that scores candidates against a job, one at a time or in bulk, with the reasons shown.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 WRITING ============ -->
+<section id="writing">
+  <div class="wrap grid4">
+    <div class="cell"><span class="label r" data-r>03 · Writing</span><p class="muted r" data-r style="--d:.1s;font-size:var(--fs-small);max-width:24ch">Notes on building with agents. Shorter takes on <a class="ul" href="https://x.com/akashmunshi07">X</a> and <a class="ul" href="https://www.linkedin.com/in/akash-munshi/">LinkedIn</a>.</p></div>
+    <div class="cell span3 bl">
+      <ul class="rows r" data-r>
+        <li><a href="https://akashmunshi.com/a-truly-autonomous-general-developer-agent"><span class="d">26 Feb 2026</span><span class="t">The time of a truly autonomous general developer agent is here</span><span class="x">essay</span></a></li>
+        <li><a href="https://akashmunshi.com/from-vibe-coding-to-agentic-engineering"><span class="d">26 Feb 2026</span><span class="t">From vibe coding to agentic engineering<small>Most of what you want to build is CRUD. Learn the blocks, then let the agents do the heavy lifting.</small></span><span class="x">guide</span></a></li>
+        <li><a href="https://akashmunshi.com/learn-new-things-in-ai"><span class="d">23 Jan 2026</span><span class="t">How to learn new things in AI with AI<small>Learning by building, and why I envy anyone starting after ChatGPT.</small></span><span class="x">essay</span></a></li>
+        <li><a href="https://akashmunshi.com/built-claude-cowork-open-source-alternative-in-2-days"><span class="d">22 Jan 2026</span><span class="t">I built an AI coworker in 2 days<small>Coding agents write code. Most of my day is Slack, email and Linear, so I built one for that.</small></span><span class="x">build log</span></a></li>
+        <li><a href="https://akashmunshi.com/the-missing-layer-of-ai-in-2026"><span class="d">19 Jan 2026</span><span class="t">The missing layer: why context is the real bottleneck in AI</span><span class="x">essay</span></a></li>
+        <li><a href="https://akashmunshi.com/how-to-vibe-code-complex-softwares"><span class="d">5 Jan 2026</span><span class="t">How to vibe code complex software<small>Stop vibe coding landing pages. Build software that actually makes your life easier.</small></span><span class="x">guide</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <i class="hl" data-r style="bottom:0"></i>
+</section>
+
+<!-- ============ 04 JOURNEY ============ -->
+<section id="journey">
+  <div class="wrap grid4">
+    <div class="cell"><span class="label r" data-r>04 · Journey</span><p class="muted r" data-r style="--d:.1s;font-size:var(--fs-small);max-width:24ch">From a first-year student with zero coding experience to running a one-person lab.</p></div>
+    <div class="cell span3 bl">
+      <ol class="tl r" data-r>
+        <li class="big"><span class="when">Nov 2026</span><span class="what"><b>Intraface goes live with two startups</b><span>And this portfolio becomes a board on it.</span></span></li>
+        <li><span class="when">Oct 2026</span><span class="what"><b>Launched a YouTube channel</b><span>My own content harness makes the videos for The Global Political and The Global AI News. One crossed 28K views.</span></span></li>
+        <li class="big"><span class="when">Sep 2026</span><span class="what"><b>Drevon launches publicly</b><span>After a month of beta with 100+ users and 3 paying customers.</span></span></li>
+        <li><span class="when">Aug 2026</span><span class="what"><b>The Growth Hackathon by GTM Machines</b><span>200+ registrations, about 50 builders and 30+ teams shipping GTM systems in two hours at Persistence, Bengaluru.</span></span></li>
+        <li><span class="when">Jan 2026</span><span class="what"><b>Hosted Lenny's Newsletter's first Kolkata meetup</b><span>And started writing at akashmunshi.com.</span></span></li>
+        <li><span class="when">Nov 2025</span><span class="what"><b>Launched Sudosu</b><span>Built in public: 200+ users by December, 500+ by the time v3 shipped.</span></span></li>
+        <li class="big"><span class="when">Oct 2025</span><span class="what"><b>Started Motiontic, a solo applied AI lab</b><span>Agents and AI products for startups in India and the US, and my own experiments on the side.</span></span></li>
+        <li><span class="when">Jun 2025</span><span class="what"><b>Founding engineer at Narrative (YC W23)</b><span>Built the browser infrastructure for AI browser-agent testing: hundreds of parallel streamed browsers per organisation, a test recorder, automation and replay.</span></span></li>
+        <li><span class="when">2024</span><span class="what"><b>Senior ML Engineer at mirrAR</b><span>Led a team of 7 to 8 for six months on the Rad Beauty product: AI try-on, StyleGAN hairstyles, ARKit.</span></span></li>
+        <li><span class="when">Nov 2023</span><span class="what"><b>Machine Learning Engineer at mirrAR</b><span>Started with StyleGAN hairstyle transfer for clients like Lakmé and an ARKit SDK, then moved into generative AI: jewellery try-on, cloth try-on and AI jewellery design software.</span></span></li>
+        <li class="big"><span class="when">2023</span><span class="what"><b>Durbin is acquired</b><span>Moved from Kolkata to Bengaluru.</span></span></li>
+        <li><span class="when">Feb 2023</span><span class="what"><b>Started consulting with Altor Smart Mobility</b><span>Product for an IoT rider-safety platform used by 150K Zomato delivery partners: 1.5M+ annotated data points a day, ETL and MLOps for on-device accident detection.</span></span></li>
+        <li><span class="when">2021</span><span class="what"><b>Graduated: B.Tech in Computer Science</b><span>Academy of Technology, 9.26 DGPA. TensorFlow Developer Certification. Taught Python and ML to 500+ students along the way.</span></span></li>
+        <li class="big"><span class="when">Jul 2020</span><span class="what"><b>Co-founded Durbin Technologies as CTO</b><span>Raised $125K and scaled AI-enabled IoT asset tracking to 500+ locations and a team of 10. LiDAR railway mapping for Indian Railways.</span></span></li>
+        <li><span class="when">May 2018</span><span class="what"><b>Co-founded Quinch Systems in college</b><span>Computer vision for Skipper, Linde and Indian Railways, in dust, bad light and old equipment.</span></span></li>
+        <li><span class="when">2017</span><span class="what"><b>First year of college, zero coding experience</b><span>Android docs, then sklearn, OpenCV, TensorFlow and PyTorch. A statistics nerd who found machine learning and was sold.</span></span></li>
+      </ol>
+    </div>
+  </div>
+  <i class="hl" data-r style="bottom:0"></i>
+</section>
+
+<!-- ============ 05 ABOUT ============ -->
+<section id="about">
+  <div class="wrap grid4">
+    <div class="cell"><span class="label r" data-r>05 · About</span></div>
+    <div class="cell span2 bl prose r" data-r>
+      <p>I don't come with big company or college tags. I learned by reading every page of documentation I could find, and later by having long conversations with ChatGPT. Distribution is the problem I've struggled with my whole career, so it is the one I most want to solve with agents.</p>
+      <p>How I work: Claude Code and Codex, 5 to 10 sessions in parallel, each in its own worktree, each looping until its tests pass. It changed what I can ship in a week more than anything else.</p>
+      <p>Outside the terminal I run <b>GTM Machines</b>, a community of 300+ GTM practitioners and founders in Bengaluru (50+ sessions so far), and <b>The Baseliners Club</b>, a lawn-tennis group with 100+ members.</p>
+    </div>
+    <div class="cell bl r" data-r style="--d:.1s">
+      <span class="label">Tools I live in</span>
+      <p style="font-size:var(--fs-small);color:var(--ink2);line-height:1.8">Claude Code and Codex<br>Python, TypeScript, Node, Rust<br>LangGraph, RAG, MCP<br>AWS, Cloudflare, Vercel, Postgres<br>Computer use on cloud phones and remote browsers, with TypeSafe's Jev decision model</p>
+      <span class="label" style="margin-top:20px">Languages</span>
+      <p class="muted" style="font-size:var(--fs-small)">English, Hindi, Bengali (native)</p>
+    </div>
+  </div>
+  <i class="hl" data-r style="bottom:0"></i>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap grid4">
+    <div class="cell span2">
+      <p class="big r" data-r>Let's build, ship<br>and scale something.</p>
+      <p class="muted r" data-r style="--d:.1s;margin-top:18px;max-width:40ch">Open to AI lead, founding and product engineering work through Motiontic. Based in Bengaluru.</p>
+      <div style="margin-top:24px" class="r" data-r><a class="btn" href="mailto:akashmunshi07@gmail.com">akashmunshi07@gmail.com</a></div>
+    </div>
+    <div class="cell bl"><span class="label">Things I made</span>
+      <ul class="made">
+        <li><a href="https://intraface.cc">Intraface</a><small>the shared context layer</small></li>
+        <li><a href="https://drevon.dev">Drevon</a><small>an AI GTM engineer</small></li>
+        <li><a href="https://github.com/csakash/gstack-loops">gstack-loops</a><small>parallel loops, spec to PR</small></li>
+        <li><a href="#lab">ARI-42</a><small>the Agent Risk Index</small></li>
+      </ul>
+    </div>
+    <div class="cell bl"><span class="label">Elsewhere</span><ul><li><a href="https://github.com/csakash">GitHub</a></li><li><a href="https://x.com/akashmunshi07">X</a></li><li><a href="https://www.linkedin.com/in/akash-munshi/">LinkedIn</a></li><li><a href="mailto:akashmunshi07@gmail.com">Email</a></li></ul></div>
+  </div>
+  <p class="colophon">© 2026 Akash Munshi · Motiontic · built as an Intraface board, edited by coding agents · <a class="ul" href="https://github.com/csakash/akashmunshi.com">source on GitHub</a></p>
+</footer>
+
+<script src="vendor/rough-4.6.6.js"></script>
+<script src="site.js" defer></script>
+</body>
+</html>

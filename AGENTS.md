@@ -1,0 +1,51 @@
+# AGENTS.md
+
+House rules for anyone, human or coding agent, who edits this site. Read this before you change `index.html`.
+
+## What this repo is
+
+Akash Munshi's personal site: one static page (`index.html`) plus `site.js` for behaviour and `vendor/rough-4.6.6.js` for the hero sketch. No framework, no build step, no package manager. Keep it that way.
+
+## Structure (keep it)
+
+Sections, in this order:
+
+1. **Hero** (`#top`) and the **stats** row
+2. **01 · Work** (`#work`): Motiontic first, with its clients in this order: Quantum Heaps (AI engineer, AI lead), PulseCorp (founding engineer), NeevCloud (product engineer, Fring), Bloom Markets (AI content), mirrAR (AI lead, as a Motiontic client). Then Narrative, mirrAR (the employment years, separate from the client work), Durbin, Quinch.
+3. **02 · Motiontic lab** (`#lab`): the experiments grid, most active first. ARI-42 and gstack-loops are the highlighted `.hi` cards. Renumber the cards if you add one.
+4. **03 · Writing** (`#writing`), newest first
+5. **04 · Journey** (`#journey`), newest first
+6. **05 · About** (`#about`) and the footer
+
+Rules for content:
+
+- Motiontic is a solo applied AI lab. All independent work since October 2025 sits under it.
+- Name clients only in Work. Never name a client in the lab grid, and keep client work out of the journey.
+- No product previews, mockups or screenshots of client products. Text only.
+- No revenue figures, and no commit or PR counts for client work.
+
+## Voice
+
+- First person, plain words, short sentences.
+- No "seamless", "leverage", "unlock" or "robust". No emoji. No em dashes: use a comma, a colon or " - ".
+- Only use numbers Akash can back (his CV, his own posts).
+- Never put a phone number on the page.
+
+## Design
+
+- Use the tokens in `:root` (`--bg`, `--ink`, `--muted`, `--line` and the rest). No new colours, no new fonts.
+- Fonts: Inter Tight for display, Inter for body, Geist Mono for meta. Architects Daughter only inside the pencil sketch.
+- Reuse the existing classes: `.h1`, `.h2`, `.h3`, `.label`, `.lead`, `.cell`, `.grid4`, `.cards`, `.xp`, `.jobs`, `.client`, `.rows`, `.tl`.
+- It must work at 375px wide with no horizontal scroll, and with reduced motion turned on.
+
+## Check your work
+
+```bash
+python3 -m http.server 8000
+```
+
+Open <http://localhost:8000>, check desktop and a 375px viewport, then confirm the browser console has no errors.
+
+## Commits
+
+Small commits, one section at a time, with a message that says what changed and why.
