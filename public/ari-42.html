@@ -14,7 +14,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@akashmunshi07">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Report","name":"ARI-42: Agent Risk Index, Edition 1.0","datePublished":"2026-11-08","url":"https://akashmunshi.com/ari-42","author":{"@type":"Person","name":"Akash Munshi","url":"https://akashmunshi.com/"},"publisher":{"@type":"Organization","name":"Motiontic"},"description":"An open index of 42 security requirements for products built on AI agents, with evidence-linked ratings of 85 agent tools."}
+{"@context":"https://schema.org","@type":"Report","name":"ARI-42: Agent Risk Index, Edition 1.0","datePublished":"2026-11-08","url":"https://akashmunshi.com/ari-42","author":{"@type":"Person","name":"Akash Munshi","url":"https://akashmunshi.com/"},"description":"An open index of 42 security requirements for products built on AI agents, with evidence-linked ratings of 85 agent tools."}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -132,13 +132,28 @@ section{scroll-margin-top:var(--hdr)}
 .f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
 .f label,.legend-l{font-size:13px;font-weight:500;color:var(--ink2)}
 .f label small{font-weight:400;color:var(--muted)}
-.f input,.f select,.f textarea,.tool input,.tool select{width:100%;background:#fff;border:1px solid var(--line);border-radius:2px;padding:10px 12px;font-size:15px;min-width:0}
+.f input,.f textarea,.tool input{width:100%;background:#fff;border:1px solid var(--line);border-radius:2px;padding:10px 12px;font-size:15px;min-width:0}
 .f textarea{min-height:86px;resize:vertical}
-.f input:focus,.f select:focus,.f textarea:focus,.tool input:focus,.tool select:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(18,18,17,.08)}
+.f input:focus,.f textarea:focus,.tool input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(18,18,17,.08)}
 .f .err-on{border-color:var(--risk)}
+/* design-native dropdown */
+.dd{position:relative;min-width:0}
+.dd-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px solid var(--line);border-radius:2px;padding:10px 12px;font-size:15px;line-height:1.35;text-align:left;cursor:pointer;color:var(--ink)}
+.dd-btn .v{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dd-btn .v.ph{color:var(--faint)}
+.dd-btn svg{width:10px;height:10px;flex:none;color:var(--muted);transition:transform .25s}
+.dd-btn:focus-visible,.dd.open .dd-btn{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(18,18,17,.08)}
+.dd.open .dd-btn svg{transform:rotate(180deg)}
+.dd-list{position:absolute;z-index:30;top:calc(100% + 6px);left:0;min-width:100%;width:max-content;max-width:min(320px,90vw);max-height:280px;overflow:auto;list-style:none;background:var(--paper);border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:4px;box-shadow:0 20px 40px -24px rgba(18,18,17,.4);padding:4px}
+.dd-list[hidden]{display:none}
+.dd-list li{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 10px;font-size:14px;color:var(--ink2);cursor:pointer;border-radius:2px}
+.dd-list li.act{background:var(--tint);color:var(--ink)}
+.dd-list li[aria-selected=true]{color:var(--ink);font-weight:500}
+.dd-list li[aria-selected=true]::after{content:"";width:9px;height:5px;border-left:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);transform:rotate(-45deg) translateY(-2px)}
+.dd.err-on .dd-btn{border-color:var(--risk)}
 .tools{display:flex;flex-direction:column;gap:8px;margin:6px 0 10px}
-.tool{display:grid;grid-template-columns:1.1fr .8fr 1.6fr 34px;gap:8px;align-items:center}
-.tool .x{width:34px;height:40px;border:1px solid var(--line);background:transparent;border-radius:2px;cursor:pointer;color:var(--muted)}
+.tool{display:grid;grid-template-columns:1fr minmax(190px,.95fr) 1.4fr 34px;gap:8px;align-items:center}
+.tool .x{width:34px;height:42px;border:1px solid var(--line);background:transparent;border-radius:2px;cursor:pointer;color:var(--muted)}
 .tool .x:hover{color:var(--ink);border-color:var(--ink)}
 .add{font-size:14px;background:none;border:1px dashed var(--line);padding:8px 12px;border-radius:2px;cursor:pointer}
 .add:hover{border-color:var(--ink)}
@@ -146,7 +161,8 @@ section{scroll-margin-top:var(--hdr)}
 .checks label{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--ink2);cursor:pointer}
 .checks input{width:16px;height:16px;accent-color:var(--ink)}
 .safe{display:flex;gap:12px;align-items:flex-start;border-left:2px solid var(--ink);background:var(--tint);padding:12px 14px;font-size:var(--fs-small);color:var(--ink2);margin:6px 0 20px}
-.safe b{font-weight:600}
+.safe b{font-weight:600;color:var(--ink)}
+.safe .lock{width:15px;height:15px;flex:none;margin-top:2px;color:var(--ink)}
 .hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
 .msg{min-height:1.5em;font-size:14px;margin-top:12px}
 .msg.err{color:var(--risk)}
@@ -215,8 +231,7 @@ small[data-only=review]{display:inline}
         <b>Published</b> 8 Nov 2026<br>
         <b>Assessed</b> 6-8 Nov 2026<br>
         <b>Scope</b> products that embed AI agents: tool use, memory, code execution, MCP, delegated access<br>
-        <b>Maintainer</b> Motiontic applied AI lab<br>
-        <b>Next edition</b> February 2027
+        <b>Maintainer</b> Akash Munshi
       </p>
     </div>
   </div>
@@ -335,13 +350,13 @@ small[data-only=review]{display:inline}
             </div>
 
             <div class="row">
-              <div class="f"><label for="timeline">Timeline</label><select id="timeline" name="timeline"><option value="">Choose one</option><option>This month</option><option>This quarter</option><option>Before a customer security review</option><option>Just exploring</option></select></div>
+              <div class="f"><span class="legend-l" id="timeline-l">Timeline</span><div class="dd" id="timeline-dd" data-name="timeline" data-label="timeline-l"></div></div>
             </div>
           </div>
 
           <div class="f"><label for="notes">Anything else? <small>(optional)</small></label><textarea id="notes" name="notes" maxlength="3000"></textarea></div>
 
-          <div class="safe" role="note"><span aria-hidden="true">🔒</span><span><b>Please don't paste passwords, API keys or tokens here.</b> If the review needs access, I'll reply with a scoped, time-boxed way to grant it, such as a read-only invite or a one-time secret link. Secrets pasted into forms end up in places they shouldn't: that is one of the 42 requirements.</span></div>
+          <div class="safe" role="note"><svg class="lock" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/><path d="M8 10v1.5"/></svg><span><b>Please don't paste passwords, API keys or tokens here.</b> If the review needs access, I'll reply with a scoped, time-boxed way to grant it, such as a read-only invite or a one-time secret link. Secrets pasted into forms end up in places they shouldn't: that is one of the 42 requirements.</span></div>
 
           <div class="hp" aria-hidden="true"><label>Leave this empty <input name="website2" tabindex="-1" autocomplete="off"></label></div>
 
@@ -362,7 +377,7 @@ small[data-only=review]{display:inline}
 
 <div class="dash"></div>
 <footer class="foot">
-  <span>ARI-42 Edition 1.0 · Motiontic applied AI lab · <a href="/">akashmunshi.com</a></span>
+  <span>ARI-42 Edition 1.0 · Akash Munshi · <a href="/">akashmunshi.com</a></span>
   <span>A rating describes a tool's documented behaviour at the assessment date. It is not a certification or a vendor ranking.</span>
 </footer>
 
@@ -373,14 +388,62 @@ small[data-only=review]{display:inline}
   const msg = document.getElementById('msg');
   const CATS = [['framework','Agent framework'],['sdk','Vendor SDK'],['harness','Coding harness'],['mcp','MCP server'],['memory','Memory / vector store'],['sandbox','Sandbox'],['gateway','LLM gateway'],['lowcode','Low-code builder'],['skills','Skills / plugins'],['model','Model provider'],['other','Other']];
 
+  // A dropdown drawn in the page's own style. Keeps its value in a hidden input named data-name.
+  let ddSeq = 0;
+  function dropdown(el, options, value, placeholder) {
+    const name = el.dataset.name, id = 'dd' + (++ddSeq);
+    el.classList.add('dd');
+    el.innerHTML = `<button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="${id}"><span class="v"></span><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 3.5 5 6.5 8 3.5"/></svg></button>
+      <ul class="dd-list" role="listbox" id="${id}" tabindex="-1" hidden>${options.map(([k, l], i) => `<li role="option" id="${id}-${i}" data-v="${k}">${l}</li>`).join('')}</ul>
+      <input type="hidden" name="${name}">`;
+    const btn = el.querySelector('.dd-btn'), list = el.querySelector('.dd-list'), input = el.querySelector('input'), label = el.querySelector('.v');
+    const items = [...list.children];
+    if (el.dataset.label) btn.setAttribute('aria-labelledby', el.dataset.label + ' ' + id + '-v');
+    else if (el.dataset.aria) btn.setAttribute('aria-label', el.dataset.aria);
+    label.id = id + '-v';
+    let act = -1;
+    const set = v => {
+      input.value = v;
+      const it = items.find(i => i.dataset.v === v);
+      items.forEach(i => i.setAttribute('aria-selected', i === it ? 'true' : 'false'));
+      label.textContent = it ? it.textContent : placeholder || '';
+      label.classList.toggle('ph', !it);
+      el.classList.remove('err-on');
+    };
+    const mark = i => { act = Math.max(0, Math.min(items.length - 1, i)); items.forEach((x, j) => x.classList.toggle('act', j === act)); items[act].scrollIntoView({ block: 'nearest' }); list.setAttribute('aria-activedescendant', items[act].id); };
+    const open = () => { document.querySelectorAll('.dd.open').forEach(d => d !== el && d._close()); el.classList.add('open'); list.hidden = false; btn.setAttribute('aria-expanded', 'true'); mark(Math.max(0, items.findIndex(i => i.dataset.v === input.value))); list.focus(); };
+    const close = (focus = true) => { el.classList.remove('open'); list.hidden = true; btn.setAttribute('aria-expanded', 'false'); if (focus) btn.focus(); };
+    el._close = () => close(false);
+    btn.addEventListener('click', () => (list.hidden ? open() : close()));
+    btn.addEventListener('keydown', e => { if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) { e.preventDefault(); open(); } });
+    list.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); mark(act + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); mark(act - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); mark(0); }
+      else if (e.key === 'End') { e.preventDefault(); mark(items.length - 1); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); set(items[act].dataset.v); close(); }
+      else if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'Tab') close(false);
+    });
+    items.forEach((it, i) => { it.addEventListener('mousemove', () => mark(i)); it.addEventListener('click', () => { set(it.dataset.v); close(); }); });
+    set(value);
+    return el;
+  }
+  document.addEventListener('click', e => document.querySelectorAll('.dd.open').forEach(d => !d.contains(e.target) && d._close()));
+
+  dropdown(document.getElementById('timeline-dd'), [['This month', 'This month'], ['This quarter', 'This quarter'], ['Before a customer security review', 'Before a customer security review'], ['Just exploring', 'Just exploring']], '', 'Choose one');
+
+  const EXAMPLES = [['LangGraph', 'framework'], ['Mem0', 'memory'], ['E2B', 'sandbox'], ['LangChain', 'framework']];
   function addTool(v = {}) {
     if (tools.children.length >= 40) return;
+    const [ex, exCat] = EXAMPLES[tools.children.length % EXAMPLES.length];
     const row = document.createElement('div');
     row.className = 'tool';
-    row.innerHTML = `<input name="tname" placeholder="e.g. LangGraph" aria-label="Tool name" maxlength="120">
-      <select name="tcat" aria-label="Category">${CATS.map(([k, l]) => `<option value="${k}">${l}</option>`).join('')}</select>
+    row.innerHTML = `<input name="tname" placeholder="e.g. ${ex}" aria-label="Tool name" maxlength="120">
+      <div data-name="tcat" data-aria="Category"></div>
       <input name="usage" placeholder="How you use it (optional)" aria-label="How you use it" maxlength="400">
       <button type="button" class="x" aria-label="Remove this tool">×</button>`;
+    dropdown(row.querySelector('[data-name=tcat]'), CATS, v.category || exCat);
     row.querySelector('.x').onclick = () => { row.remove(); if (!tools.children.length) addTool(); };
     if (v.name) row.querySelector('[name=tname]').value = v.name;
     tools.appendChild(row);
