@@ -18,7 +18,7 @@
 <link rel="canonical" href="https://akashmunshi.com/ari-42">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ARI-42, the Agent Risk Index">
-<meta property="og:description" content="85 agent tools rated against 42 security requirements. Tools meet a requirement by default in 2% of cases.">
+<meta property="og:description" content="85 agent tools rated against 42 security requirements. Tools meet a requirement by default in 3% of cases.">
 <meta property="og:url" content="https://akashmunshi.com/ari-42">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@akashmunshi07">
@@ -250,14 +250,14 @@ small[data-only=review]{display:inline}
 <section id="numbers">
   <div class="wrap">
     <div class="nums">
-      <div class="num hi"><b>2%</b><span>of tool × requirement pairs are met by a tool's defaults</span></div>
+      <div class="num hi"><b>3%</b><span>of tool × requirement pairs are met by a tool's defaults</span></div>
       <div class="num"><b>42</b><span>verifiable requirements in 10 domains</span></div>
       <div class="num"><b>85</b><span>agent tools rated, across 8 categories</span></div>
       <div class="num"><b>2,099</b><span>ratings, each tied to a cited source</span></div>
       <div class="num"><b>129,058</b><span>CVEs published in 2025-26, screened</span></div>
       <div class="num"><b>7,257</b><span>of them in AI or agent software</span></div>
       <div class="num"><b>759</b><span>AI incidents from 2025-26 reviewed</span></div>
-      <div class="num"><b>283</b><span>Risk ratings re-checked first-hand in a disposable sandbox</span></div>
+      <div class="num"><b>420</b><span>ratings corrected after all 2,099 were re-checked in a disposable sandbox</span></div>
     </div>
   </div>
 </section>
@@ -267,11 +267,11 @@ small[data-only=review]{display:inline}
     <div class="cell"><span class="label">Key findings</span><p class="muted" style="font-size:var(--fs-small);max-width:26ch">Counts of documented behaviour and published records, not measurements of any deployed system.</p></div>
     <div class="cell span3 bl">
       <div class="finds">
-        <div class="find"><span class="k">01 · coverage</span><b>50%</b><h3>The builder carries the requirement alone</h3><p>Of 2,099 applicable pairs, 51 are met by a built-in feature, 719 get partial help (usually a setting that is off by default) and 1,059 leave it entirely to you. 270 are Risks.</p></div>
-        <div class="find"><span class="k">02 · code execution</span><b>1,302</b><h3>CVEs a code sandbox would have prevented</h3><p>Sandboxing agent-generated code is the most-violated requirement. 37 of 70 tools still run agent code on the host by default or rest on a recent sandbox escape.</p></div>
-        <div class="find"><span class="k">03 · supply chain</span><b>51 of 70</b><h3>Tools had a relevant 2025-26 vulnerability</h3><p>The agent stack is now critical supply chain. 68 of the 85 tools had at least one security incident: 221 in total, 166 of them in 2026.</p></div>
+        <div class="find"><span class="k">01 · coverage</span><b>34%</b><h3>The builder carries the requirement alone</h3><p>Of 2,099 applicable pairs, only 55 (3%) are met by a built-in feature. 1,032 (49%) get partial help, usually a setting that is off by default, in preview or on a paid tier. In 704 (34%) it is entirely on you, and 308 (15%) are Risks.</p></div>
+        <div class="find"><span class="k">02 · code execution</span><b>1,302</b><h3>CVEs a code sandbox would have prevented</h3><p>Sandboxing agent-generated code is the most-violated requirement. 37 of 70 tools still run agent code on the host by default or rest on a recent sandbox escape. Only 2 meet it by default.</p></div>
+        <div class="find"><span class="k">03 · supply chain</span><b>53 of 70</b><h3>Tools had a relevant 2025-26 vulnerability</h3><p>The agent stack is now critical supply chain. 68 of the 85 tools had at least one security incident: 221 in total, 166 of them in 2026.</p></div>
         <div class="find"><span class="k">04 · growth</span><b>3.0 → 7.0%</b><h3>AI software's share of all CVEs more than doubled</h3><p>From 2025 to 2026 to date. About half are flaws in AI-specific features; the rest are ordinary web flaws shipped inside AI products.</p></div>
-        <div class="find"><span class="k">05 · MCP and memory</span><b>19%</b><h3>Of MCP ratings are Risks</h3><p>MCP and agent-memory tooling carry the most risk (19% and 18%, against 9-14% elsewhere). Every one of the 14 MCP tools rated has at least one.</p></div>
+        <div class="find"><span class="k">05 · MCP and memory</span><b>21%</b><h3>Of MCP ratings are Risks</h3><p>MCP and agent-memory tooling carry the most risk (21% and 18%, against 11-17% elsewhere). 28 of the 47 tools that expose an MCP or agent endpoint ship it without authentication by default.</p></div>
         <div class="find"><span class="k">06 · incidents</span><b>89 of 759</b><h3>Incidents the builder's own controls would have changed</h3><p>39 involved an agent taking a harmful action, most often deleting production data or acting without approval.</p></div>
       </div>
     </div>
@@ -291,7 +291,7 @@ small[data-only=review]{display:inline}
         <li class="q"><span class="id">INJ-4</span><div><h3>Can your agents reach any domain on the internet, or only the ones you allow?</h3><p>Deny-by-default egress for agent runtimes, CI runners and AI gateways, DNS included. <i>Proof: a test showing an arbitrary domain is unreachable.</i></p></div><span class="cve"><b>636</b><span>related CVEs</span></span></li>
         <li class="q"><span class="id">GW-2</span><div><h3>Is your agent stack treated as critical supply chain?</h3><p>Gateways, frameworks and inference servers hash-pinned, authenticated and patched against known exploited vulnerabilities within days. <i>Proof: lockfile hashes, image digests, patch tickets.</i></p></div><span class="cve"><b>208</b><span>related CVEs</span></span></li>
         <li class="q"><span class="id">AUTH-3</span><div><h3>Do sends, payments, deletes and deploys need human approval tied to the exact action?</h3><p>The approval screen is built from the real tool-call arguments, not the model's summary, and enforced outside the model. <i>Proof: approval matrix and approval event logs.</i></p></div><span class="cve"><b>39</b><span>harmful-action incidents</span></span></li>
-        <li class="q"><span class="id">INJ-2</span><div><h3>Does any agent hold private data, read untrusted content and have a way to send data out, all at once?</h3><p>That combination is the lethal trifecta for prompt injection. Name the control that breaks the chain for each agent. <i>Proof: a per-agent capability matrix.</i></p></div><span class="cve"><b>51 of 85</b><span>tools leave it to you</span></span></li>
+        <li class="q"><span class="id">INJ-2</span><div><h3>Does any agent hold private data, read untrusted content and have a way to send data out, all at once?</h3><p>That combination is the lethal trifecta for prompt injection. Name the control that breaks the chain for each agent. <i>Proof: a per-agent capability matrix.</i></p></div><span class="cve"><b>45 of 68</b><span>tools leave it to you</span></span></li>
       </ol>
       <div class="domains" aria-label="The 10 domains">
         <span><b>GOV</b> inventory and governance</span><span><b>DATA</b> data sent to models</span><span><b>AUTH</b> agent identity and permissions</span><span><b>INJ</b> untrusted content and injection</span><span><b>OUT</b> output and behaviour</span><span><b>MCP</b> servers, tools and skills</span><span><b>GW</b> providers and gateways</span><span><b>LOG</b> logging and incidents</span><span><b>EVAL</b> testing and red-teaming</span><span><b>SDLC</b> coding agents in engineering</span>
