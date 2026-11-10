@@ -49,8 +49,10 @@ public/
   site.js                 header, scroll reveals, number counters and the hero sketch
   vendor/rough-4.6.6.js   rough.js, draws the pencil sketch in the hero
   <slug>.html             one page per essay, served at akashmunshi.com/<slug>
+  ari-42.html             ARI-42 research page and the review request form
   images/                 images used in the essays
-src/worker.js             Cloudflare Worker: https and www redirects, then serves public/
+src/worker.js             Cloudflare Worker: redirects, the ARI-42 request API, the admin view, then public/
+migrations/               D1 schema for ARI-42 requests
 wrangler.jsonc            Worker config: assets directory and custom domains
 docs/screenshot.png       the image at the top of this README
 AGENTS.md                 house rules for coding agents (and people) editing the page
@@ -60,6 +62,18 @@ AGENTS.md                 house rules for coding agents (and people) editing the
 - **Motion.** Sections fade in as they scroll into view and the hero sketch draws itself in. Anyone who has turned on reduced motion gets everything at once, with nothing animated.
 - **Responsive.** The four-column grid collapses to one column under 900px, with no sideways scroll at 375px.
 - **No dependencies at runtime** apart from Google Fonts and the vendored rough.js.
+
+## ARI-42 requests
+
+`/ari-42` has a form where people ask for the full 42-question list or a review of their agent stack. It posts to `POST /api/ari-42/request` in the Worker, which validates the request, rejects anything that looks like a pasted secret, rate-limits by IP and stores it in the D1 database `akashmunshi-ari42`. The form never asks for credentials: access for a review is agreed by email afterwards.
+
+Requests are listed at `/ari-42/admin`, behind HTTP Basic auth (user `akash`, password in the `ADMIN_PASSWORD` Worker secret). To change the password:
+
+```bash
+npx wrangler secret put ADMIN_PASSWORD
+```
+
+Schema changes go in `migrations/` and are applied with `npx wrangler d1 migrations apply akashmunshi-ari42 --remote`.
 
 ## Editing
 

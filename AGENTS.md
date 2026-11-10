@@ -29,6 +29,13 @@ Rules for content:
 - Each essay is one page at `public/<slug>.html`, served at `akashmunshi.com/<slug>`. Never change a slug: these URLs were live on the old site and are linked from elsewhere.
 - To add an essay, copy an existing essay page, change the title, description, dates, canonical URL and body, put any images in `public/images/`, link the previous newest essay to it in the Older/Newer nav, and add a row at the top of Writing in `public/index.html`.
 
+## ARI-42
+
+- `public/ari-42.html` is the ARI-42 page; its numbers come from the research in `~/Projects/warden/research/ari42`. Only use figures that appear there.
+- Show at most 10 of the 42 questions publicly. The full list is sent on request.
+- The request form must never collect passwords, API keys or tokens. The Worker rejects anything that looks like a secret; keep it that way.
+- ARI-42 is the current highlight: it is linked from the hero, the nav, the lab card and the footer.
+
 ## Voice
 
 - First person, plain words, short sentences.

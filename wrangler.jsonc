@@ -9,6 +9,14 @@
     "binding": "ASSETS",
     "run_worker_first": true
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "akashmunshi-ari42",
+      "database_id": "762330e3-46b9-43e0-baae-6ea15c668fbd",
+      "migrations_dir": "migrations"
+    }
+  ],
   "routes": [
     { "pattern": "akashmunshi.com", "custom_domain": true },
     { "pattern": "www.akashmunshi.com", "custom_domain": true }

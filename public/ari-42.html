@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARI-42, the Agent Risk Index - Akash Munshi</title>
+<meta name="description" content="42 security requirements a product built on AI agents should meet, and how far 85 agent frameworks, SDKs, harnesses and MCP tools take you. Request a review of your agent stack.">
+<meta name="theme-color" content="#F4F3EE">
+<link rel="canonical" href="https://akashmunshi.com/ari-42">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARI-42, the Agent Risk Index">
+<meta property="og:description" content="85 agent tools rated against 42 security requirements. Tools meet a requirement by default in 2% of cases.">
+<meta property="og:url" content="https://akashmunshi.com/ari-42">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@akashmunshi07">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Report","name":"ARI-42: Agent Risk Index, Edition 1.0","datePublished":"2026-11-08","url":"https://akashmunshi.com/ari-42","author":{"@type":"Person","name":"Akash Munshi","url":"https://akashmunshi.com/"},"publisher":{"@type":"Organization","name":"Motiontic"},"description":"An open index of 42 security requirements for products built on AI agents, with evidence-linked ratings of 85 agent tools."}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f4f3ee; --ink:#121211; --ink2:#2b2b29; --muted:#6c6b66; --faint:#a3a29c;
+  --line:rgba(18,18,17,.24); --hair:rgba(18,18,17,.1); --tint:rgba(18,18,17,.05); --ok:#2f6b41; --risk:#9b3b2a;
+  --paper:#fcfbf8;
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --display:"Inter Tight","Inter",ui-sans-serif,system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --g:clamp(16px,4.4vw,72px); --pad:clamp(18px,2.4vw,40px); --sp:clamp(36px,4.5vw,72px);
+  --fs-body:clamp(14px,1.1vw,17px); --fs-small:clamp(12px,.86vw,13.5px);
+  --hdr:clamp(56px,4.6vw,72px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:var(--fs-body);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+::selection{background:var(--ink);color:var(--bg)}
+section{scroll-margin-top:var(--hdr)}
+.wrap{width:min(100% - 2*var(--g),1440px);margin-inline:auto}
+.dash{height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 9px)}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.span3{grid-column:span 3}
+.cell{padding:var(--sp) var(--pad)}
+.bl{position:relative}
+.bl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:repeating-linear-gradient(180deg,var(--line) 0 4px,transparent 4px 9px)}
+.label{font-size:var(--fs-small);color:var(--muted);display:block;margin-bottom:12px}
+.h2{font-family:var(--display);font-weight:400;font-size:clamp(26px,2.5vw,42px);line-height:1.1;letter-spacing:-.022em}
+.lead{color:var(--muted);max-width:62ch}
+.ul{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.ul:hover{text-decoration-color:var(--ink)}
+.mono{font-family:var(--mono)}
+
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--bg);font-size:15px;padding:.72em 1.15em;border-radius:2px;border:1px solid var(--ink);cursor:pointer;transition:background .25s}
+.btn:hover{background:#34342f}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--tint)}
+.btn[disabled]{opacity:.6;cursor:default}
+
+/* header */
+.hdr{position:sticky;top:0;z-index:50;height:var(--hdr);background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.hdr-in{height:100%;display:flex;align-items:center;padding-inline:var(--pad);gap:24px}
+.logo{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:clamp(17px,1.35vw,21px);letter-spacing:-.03em}
+.logo .mk{width:26px;height:26px;border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:3px;display:grid;place-items:center;font:500 11px/1 var(--mono);letter-spacing:0}
+.nav{margin-left:auto;display:flex;gap:clamp(16px,2.6vw,36px);font-size:15px;color:var(--ink2)}
+.nav a:hover{color:var(--ink)}
+.hdr .btn{font-size:14px}
+
+/* hero */
+.hero .cell{padding-top:clamp(40px,6vw,96px);padding-bottom:clamp(32px,4vw,64px)}
+.kicker{display:inline-flex;align-items:center;gap:8px;font:400 12px/1 var(--mono);color:var(--ink2);border:1px dashed var(--line);padding:6px 9px;border-radius:2px}
+.kicker::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,5.2vw,84px);line-height:1.02;letter-spacing:-.03em;margin:20px 0 22px;max-width:16ch}
+.hero .lead{font-size:clamp(16px,1.3vw,20px);color:var(--ink2);max-width:58ch}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.ed{font:400 12px/1.9 var(--mono);color:var(--muted)}
+.ed b{color:var(--ink);font-weight:500}
+
+/* numbers */
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px dashed var(--line);border-left:1px dashed var(--line)}
+.num{padding:clamp(20px,2.2vw,34px) var(--pad);border-right:1px dashed var(--line);border-bottom:1px dashed var(--line)}
+.num b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(32px,3.4vw,58px);letter-spacing:-.03em;line-height:1}
+.num span{display:block;color:var(--muted);font-size:var(--fs-small);margin-top:10px;max-width:26ch}
+.num.hi{background:var(--ink);color:var(--bg)}
+.num.hi span{color:#bdbcb6}
+
+/* findings */
+.finds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair)}
+.find{background:var(--bg);padding:clamp(18px,1.8vw,28px)}
+.find .k{font:400 11px/1 var(--mono);color:var(--faint)}
+.find b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(28px,2.6vw,42px);letter-spacing:-.025em;line-height:1;margin:12px 0 8px}
+.find h3{font-family:var(--display);font-weight:500;font-size:clamp(16px,1.2vw,19px);letter-spacing:-.01em;line-height:1.3}
+.find p{font-size:var(--fs-small);color:var(--muted);margin-top:6px}
+
+/* questions */
+.qs{list-style:none;counter-reset:q}
+.q{display:grid;grid-template-columns:110px minmax(0,1fr) 150px;gap:8px 28px;padding:20px 0;border-top:1px dashed var(--line)}
+.q:last-child{border-bottom:1px dashed var(--line)}
+.q .id{font:400 12px/1.6 var(--mono);color:var(--muted)}
+.q h3{font-family:var(--display);font-weight:500;font-size:clamp(17px,1.35vw,21px);letter-spacing:-.012em;line-height:1.3}
+.q p{font-size:var(--fs-small);color:var(--muted);margin-top:6px;max-width:72ch}
+.q p i{font-style:normal;color:var(--ink2)}
+.q .cve{text-align:right}
+.q .cve b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(22px,1.9vw,30px);letter-spacing:-.02em;line-height:1}
+.q .cve span{font-size:11.5px;color:var(--muted)}
+.domains{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.domains span{font:400 12px/1 var(--mono);border:1px dashed var(--line);padding:7px 9px;border-radius:2px;color:var(--ink2)}
+.domains span b{font-weight:500;color:var(--ink)}
+
+/* legend + steps */
+.legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair);margin-top:22px}
+.legend div{background:var(--bg);padding:16px 18px;font-size:var(--fs-small);color:var(--muted)}
+.legend b{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:17px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.legend i{width:12px;height:12px;display:inline-block;border:1px solid var(--ink)}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair)}
+.steps li{background:var(--bg);padding:clamp(18px,1.8vw,26px)}
+.steps .k{font:400 11px/1 var(--mono);color:var(--faint)}
+.steps h3{font-family:var(--display);font-weight:500;font-size:clamp(16px,1.2vw,19px);margin:10px 0 6px;letter-spacing:-.01em}
+.steps p{font-size:var(--fs-small);color:var(--muted)}
+
+/* form */
+.form{background:var(--paper);border:1px solid var(--ink);outline:1px dashed var(--line);outline-offset:8px;padding:clamp(20px,2.6vw,40px);max-width:920px}
+.kinds{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.kind{position:relative;border:1px solid var(--line);padding:14px 16px;cursor:pointer;border-radius:2px;display:block}
+.kind input{position:absolute;opacity:0}
+.kind b{display:block;font-family:var(--display);font-weight:500;font-size:17px}
+.kind span{font-size:var(--fs-small);color:var(--muted)}
+.kind:has(input:checked){border-color:var(--ink);background:var(--bg);box-shadow:inset 0 0 0 1px var(--ink)}
+.kind:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+.f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.f label,.legend-l{font-size:13px;font-weight:500;color:var(--ink2)}
+.f label small{font-weight:400;color:var(--muted)}
+.f input,.f select,.f textarea,.tool input,.tool select{width:100%;background:#fff;border:1px solid var(--line);border-radius:2px;padding:10px 12px;font-size:15px;min-width:0}
+.f textarea{min-height:86px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus,.tool input:focus,.tool select:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(18,18,17,.08)}
+.f .err-on{border-color:var(--risk)}
+.tools{display:flex;flex-direction:column;gap:8px;margin:6px 0 10px}
+.tool{display:grid;grid-template-columns:1.1fr .8fr 1.6fr 34px;gap:8px;align-items:center}
+.tool .x{width:34px;height:40px;border:1px solid var(--line);background:transparent;border-radius:2px;cursor:pointer;color:var(--muted)}
+.tool .x:hover{color:var(--ink);border-color:var(--ink)}
+.add{font-size:14px;background:none;border:1px dashed var(--line);padding:8px 12px;border-radius:2px;cursor:pointer}
+.add:hover{border-color:var(--ink)}
+.checks{display:flex;flex-wrap:wrap;gap:8px 18px;margin:6px 0 14px}
+.checks label{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--ink2);cursor:pointer}
+.checks input{width:16px;height:16px;accent-color:var(--ink)}
+.safe{display:flex;gap:12px;align-items:flex-start;border-left:2px solid var(--ink);background:var(--tint);padding:12px 14px;font-size:var(--fs-small);color:var(--ink2);margin:6px 0 20px}
+.safe b{font-weight:600}
+.hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.msg{min-height:1.5em;font-size:14px;margin-top:12px}
+.msg.err{color:var(--risk)}
+.done{display:none;padding:10px 0}
+.done h3{font-family:var(--display);font-weight:400;font-size:clamp(24px,2.2vw,34px);letter-spacing:-.02em}
+.done p{color:var(--muted);margin-top:8px;max-width:56ch}
+.form.sent .fields{display:none}.form.sent .done{display:block}
+div[data-only=review]{display:block}
+small[data-only=review]{display:inline}
+.form.list [data-only=review]{display:none!important}
+
+.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:28px var(--pad) 40px;font:400 12px/1.6 var(--mono);color:var(--faint)}
+.foot a:hover{color:var(--ink)}
+
+@media (max-width:1000px){
+  .nums{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .finds,.steps,.legend{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+}
+@media (max-width:760px){
+  .nav{display:none}
+  .grid4{grid-template-columns:minmax(0,1fr)}
+  .span3{grid-column:auto}
+  .bl::before{left:0;right:0;top:0;bottom:auto;width:auto;height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 9px)}
+  .finds,.steps,.legend,.kinds,.row{grid-template-columns:minmax(0,1fr)}
+  .q{grid-template-columns:minmax(0,1fr);gap:4px}
+  .q .cve{text-align:left;display:flex;gap:8px;align-items:baseline}
+  .tool{grid-template-columns:1fr 1fr;}
+  .tool input[name=usage]{grid-column:1/-1}
+  .tool .x{grid-column:2;justify-self:end}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="logo" href="/" aria-label="Akash Munshi, home"><span class="mk">AM</span><span>Akash Munshi</span></a>
+    <nav class="nav" aria-label="Page sections">
+      <a href="#numbers">Numbers</a>
+      <a href="#findings">Findings</a>
+      <a href="#questions">Questions</a>
+      <a href="#review">Review</a>
+    </nav>
+    <a class="btn" href="#review">Request a review</a>
+  </div>
+  <div class="dash" style="opacity:.6"></div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="wrap grid4">
+    <div class="cell span3">
+      <span class="kicker">Edition 1 · out now</span>
+      <h1>ARI-42, the Agent Risk Index</h1>
+      <p class="lead">42 security requirements a product built on AI agents should meet, and how far 85 widely used agent frameworks, SDKs, harnesses and MCP tools actually take you toward each one. Every requirement is tied to the 2025-26 CVE and incident record that motivates it.</p>
+      <div class="ctas">
+        <a class="btn" href="#review" data-kind="review">Get your agent stack reviewed</a>
+        <a class="btn ghost" href="#review" data-kind="list">Request the full 42 questions</a>
+      </div>
+    </div>
+    <div class="cell bl">
+      <p class="ed">
+        <b>Edition</b> 1.0<br>
+        <b>Published</b> 8 Nov 2026<br>
+        <b>Assessed</b> 6-8 Nov 2026<br>
+        <b>Scope</b> products that embed AI agents: tool use, memory, code execution, MCP, delegated access<br>
+        <b>Maintainer</b> Motiontic applied AI lab<br>
+        <b>Next edition</b> February 2027
+      </p>
+    </div>
+  </div>
+  <div class="dash"></div>
+</section>
+
+<section id="numbers">
+  <div class="wrap">
+    <div class="nums">
+      <div class="num hi"><b>2%</b><span>of tool × requirement pairs are met by a tool's defaults</span></div>
+      <div class="num"><b>42</b><span>verifiable requirements in 10 domains</span></div>
+      <div class="num"><b>85</b><span>agent tools rated, across 8 categories</span></div>
+      <div class="num"><b>2,099</b><span>ratings, each tied to a cited source</span></div>
+      <div class="num"><b>129,058</b><span>CVEs published in 2025-26, screened</span></div>
+      <div class="num"><b>7,257</b><span>of them in AI or agent software</span></div>
+      <div class="num"><b>759</b><span>AI incidents from 2025-26 reviewed</span></div>
+      <div class="num"><b>283</b><span>Risk ratings re-checked first-hand in a disposable sandbox</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="findings">
+  <div class="wrap grid4">
+    <div class="cell"><span class="label">Key findings</span><p class="muted" style="font-size:var(--fs-small);max-width:26ch">Counts of documented behaviour and published records, not measurements of any deployed system.</p></div>
+    <div class="cell span3 bl">
+      <div class="finds">
+        <div class="find"><span class="k">01 · coverage</span><b>50%</b><h3>The builder carries the requirement alone</h3><p>Of 2,099 applicable pairs, 51 are met by a built-in feature, 719 get partial help (usually a setting that is off by default) and 1,059 leave it entirely to you. 270 are Risks.</p></div>
+        <div class="find"><span class="k">02 · code execution</span><b>1,302</b><h3>CVEs a code sandbox would have prevented</h3><p>Sandboxing agent-generated code is the most-violated requirement. 37 of 70 tools still run agent code on the host by default or rest on a recent sandbox escape.</p></div>
+        <div class="find"><span class="k">03 · supply chain</span><b>51 of 70</b><h3>Tools had a relevant 2025-26 vulnerability</h3><p>The agent stack is now critical supply chain. 68 of the 85 tools had at least one security incident: 221 in total, 166 of them in 2026.</p></div>
+        <div class="find"><span class="k">04 · growth</span><b>3.0 → 7.0%</b><h3>AI software's share of all CVEs more than doubled</h3><p>From 2025 to 2026 to date. About half are flaws in AI-specific features; the rest are ordinary web flaws shipped inside AI products.</p></div>
+        <div class="find"><span class="k">05 · MCP and memory</span><b>19%</b><h3>Of MCP ratings are Risks</h3><p>MCP and agent-memory tooling carry the most risk (19% and 18%, against 9-14% elsewhere). Every one of the 14 MCP tools rated has at least one.</p></div>
+        <div class="find"><span class="k">06 · incidents</span><b>89 of 759</b><h3>Incidents the builder's own controls would have changed</h3><p>39 involved an agent taking a harmful action, most often deleting production data or acting without approval.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="dash"></div>
+</section>
+
+<section id="questions">
+  <div class="wrap grid4">
+    <div class="cell"><span class="label">8 of the 42</span><h2 class="h2" style="font-size:clamp(22px,1.9vw,30px)">Questions every agent product should be able to answer</h2></div>
+    <div class="cell span3 bl">
+      <ol class="qs">
+        <li class="q"><span class="id">OUT-4</span><div><h3>Does code your agent generates run in a disposable sandbox, with no host files, secrets or open network?</h3><p>Per session, not as root, no customer data beyond the task, no <code>eval()</code> of model output. <i>Proof: a test showing generated code can't read host files or environment.</i></p></div><span class="cve"><b>1,302</b><span>related CVEs</span></span></li>
+        <li class="q"><span class="id">OUT-1</span><div><h3>Is model output validated before it reaches SQL, a shell, HTML, an API or another agent?</h3><p>Model-written SQL runs only through parameterised templates or under the user's own database identity. <i>Proof: output schemas and the database role used by AI-generated queries.</i></p></div><span class="cve"><b>1,131</b><span>related CVEs</span></span></li>
+        <li class="q"><span class="id">AUTH-2</span><div><h3>Can an agent ever do more than the user it is acting for?</h3><p>The user's token is never passed to third-party tools, and each delegation hop gets scopes no wider than the one before. <i>Proof: on-behalf-of token design and authorisation tests.</i></p></div><span class="cve"><b>1,108</b><span>related CVEs</span></span></li>
+        <li class="q"><span class="id">MCP-3</span><div><h3>Is every MCP server or agent API you expose authenticated, tenant-scoped, rate-limited and logged?</h3><p>OAuth per the current MCP spec. <i>Proof: auth configuration and a pen test of the endpoint.</i></p></div><span class="cve"><b>750</b><span>related CVEs</span></span></li>
+        <li class="q"><span class="id">INJ-4</span><div><h3>Can your agents reach any domain on the internet, or only the ones you allow?</h3><p>Deny-by-default egress for agent runtimes, CI runners and AI gateways, DNS included. <i>Proof: a test showing an arbitrary domain is unreachable.</i></p></div><span class="cve"><b>636</b><span>related CVEs</span></span></li>
+        <li class="q"><span class="id">GW-2</span><div><h3>Is your agent stack treated as critical supply chain?</h3><p>Gateways, frameworks and inference servers hash-pinned, authenticated and patched against known exploited vulnerabilities within days. <i>Proof: lockfile hashes, image digests, patch tickets.</i></p></div><span class="cve"><b>208</b><span>related CVEs</span></span></li>
+        <li class="q"><span class="id">AUTH-3</span><div><h3>Do sends, payments, deletes and deploys need human approval tied to the exact action?</h3><p>The approval screen is built from the real tool-call arguments, not the model's summary, and enforced outside the model. <i>Proof: approval matrix and approval event logs.</i></p></div><span class="cve"><b>39</b><span>harmful-action incidents</span></span></li>
+        <li class="q"><span class="id">INJ-2</span><div><h3>Does any agent hold private data, read untrusted content and have a way to send data out, all at once?</h3><p>That combination is the lethal trifecta for prompt injection. Name the control that breaks the chain for each agent. <i>Proof: a per-agent capability matrix.</i></p></div><span class="cve"><b>51 of 85</b><span>tools leave it to you</span></span></li>
+      </ol>
+      <div class="domains" aria-label="The 10 domains">
+        <span><b>GOV</b> inventory and governance</span><span><b>DATA</b> data sent to models</span><span><b>AUTH</b> agent identity and permissions</span><span><b>INJ</b> untrusted content and injection</span><span><b>OUT</b> output and behaviour</span><span><b>MCP</b> servers, tools and skills</span><span><b>GW</b> providers and gateways</span><span><b>LOG</b> logging and incidents</span><span><b>EVAL</b> testing and red-teaming</span><span><b>SDLC</b> coding agents in engineering</span>
+      </div>
+      <p class="muted" style="font-size:var(--fs-small);margin-top:16px">The other 34 requirements, with the evidence a reviewer should ask for and their mappings to OWASP, MITRE ATLAS, CoSAI and ISO, are in the full list. <a class="ul" href="#review" data-kind="list">Request it here</a>.</p>
+    </div>
+  </div>
+  <div class="dash"></div>
+</section>
+
+<section id="how">
+  <div class="wrap grid4">
+    <div class="cell"><span class="label">How a review works</span><p class="muted" style="font-size:var(--fs-small);max-width:26ch">For teams shipping a product built on AI agents.</p></div>
+    <div class="cell span3 bl">
+      <ol class="steps">
+        <li><span class="k">01</span><h3>You list your stack</h3><p>The frameworks, SDKs, MCP servers, memory, sandboxes and gateways your agents run on, using the form below.</p></li>
+        <li><span class="k">02</span><h3>I map it to the index</h3><p>Each tool against all 42 requirements, from the Edition 1 ratings and its current version.</p></li>
+        <li><span class="k">03</span><h3>We agree access, safely</h3><p>Read-only, scoped and time-boxed: a repo invite, a staging account or a walkthrough. Never through this form.</p></li>
+        <li><span class="k">04</span><h3>You get the report</h3><p>Every requirement marked built in, partial, gap or risk for your stack, with the evidence and fixes ordered by real-world impact.</p></li>
+      </ol>
+      <div class="legend" aria-label="How tools are rated">
+        <div><b><i style="background:var(--ink)"></i>Built in</b>A documented feature meets most of the requirement.</div>
+        <div><b><i style="background:repeating-linear-gradient(135deg,var(--ink) 0 2px,transparent 2px 5px)"></i>Partial</b>The tool helps, but the feature is off by default or incomplete.</div>
+        <div><b><i></i>Gap</b>The requirement applies; you must build it yourself.</div>
+        <div><b><i style="background:var(--risk);border-color:var(--risk)"></i>Risk</b>The default works against you, or a 2025-26 vulnerability broke it.</div>
+      </div>
+    </div>
+  </div>
+  <div class="dash"></div>
+</section>
+
+<section id="review">
+  <div class="wrap grid4">
+    <div class="cell"><span class="label">Request</span><h2 class="h2" style="font-size:clamp(22px,1.9vw,30px)">Get your stack reviewed, or the full list</h2><p class="muted" style="font-size:var(--fs-small);margin-top:12px;max-width:26ch">I reply by email, usually within two working days.</p></div>
+    <div class="cell span3 bl">
+      <form class="form" id="ari-form" novalidate>
+        <div class="fields">
+          <fieldset class="kinds" style="border:0">
+            <legend class="hp">What would you like?</legend>
+            <label class="kind"><input type="radio" name="kind" value="review" checked><b>Review my agent stack</b><span>List your tools and I'll check them against all 42 requirements.</span></label>
+            <label class="kind"><input type="radio" name="kind" value="list"><b>Send me the full 42 questions</b><span>The complete list with the evidence to ask for.</span></label>
+          </fieldset>
+
+          <div class="row">
+            <div class="f"><label for="name">Name</label><input id="name" name="name" autocomplete="name" required maxlength="120"></div>
+            <div class="f"><label for="email">Work email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="200"></div>
+            <div class="f"><label for="company">Company <small data-only="review">(required for a review)</small></label><input id="company" name="company" autocomplete="organization" maxlength="160"></div>
+            <div class="f"><label for="website">Website <small>(optional)</small></label><input id="website" name="website" type="url" inputmode="url" placeholder="https://" maxlength="300"></div>
+          </div>
+
+          <div data-only="review">
+            <div class="f"><label for="product">What does your agent product do?</label><textarea id="product" name="product" maxlength="2000" placeholder="e.g. a support agent that reads tickets, queries our database and issues refunds"></textarea></div>
+
+            <span class="legend-l" id="tools-l">Tools your agents run on</span>
+            <div class="tools" id="tools" aria-labelledby="tools-l"></div>
+            <button type="button" class="add" id="add-tool">+ Add a tool</button>
+
+            <div class="f" style="margin-top:18px"><span class="legend-l">Access you could give for the review <small style="font-weight:400;color:var(--muted)">(we set it up later, together)</small></span>
+              <div class="checks">
+                <label><input type="checkbox" name="access" value="docs"> Architecture docs</label>
+                <label><input type="checkbox" name="access" value="repo-read"> Read-only repo access</label>
+                <label><input type="checkbox" name="access" value="staging"> A staging environment</label>
+                <label><input type="checkbox" name="access" value="call"> A walkthrough call</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="f"><label for="timeline">Timeline</label><select id="timeline" name="timeline"><option value="">Choose one</option><option>This month</option><option>This quarter</option><option>Before a customer security review</option><option>Just exploring</option></select></div>
+            </div>
+          </div>
+
+          <div class="f"><label for="notes">Anything else? <small>(optional)</small></label><textarea id="notes" name="notes" maxlength="3000"></textarea></div>
+
+          <div class="safe" role="note"><span aria-hidden="true">🔒</span><span><b>Please don't paste passwords, API keys or tokens here.</b> If the review needs access, I'll reply with a scoped, time-boxed way to grant it, such as a read-only invite or a one-time secret link. Secrets pasted into forms end up in places they shouldn't: that is one of the 42 requirements.</span></div>
+
+          <div class="hp" aria-hidden="true"><label>Leave this empty <input name="website2" tabindex="-1" autocomplete="off"></label></div>
+
+          <button class="btn" type="submit" id="submit">Send request</button>
+          <p class="msg" id="msg" role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="done" id="done" tabindex="-1">
+          <h3>Thanks, it's in.</h3>
+          <p id="done-text">I'll reply by email. Your reference is <span class="mono" id="ref"></span>.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="dash"></div>
+<footer class="foot">
+  <span>ARI-42 Edition 1.0 · Motiontic applied AI lab · <a href="/">akashmunshi.com</a></span>
+  <span>A rating describes a tool's documented behaviour at the assessment date. It is not a certification or a vendor ranking.</span>
+</footer>
+
+<script>
+(() => {
+  const form = document.getElementById('ari-form');
+  const tools = document.getElementById('tools');
+  const msg = document.getElementById('msg');
+  const CATS = [['framework','Agent framework'],['sdk','Vendor SDK'],['harness','Coding harness'],['mcp','MCP server'],['memory','Memory / vector store'],['sandbox','Sandbox'],['gateway','LLM gateway'],['lowcode','Low-code builder'],['skills','Skills / plugins'],['model','Model provider'],['other','Other']];
+
+  function addTool(v = {}) {
+    if (tools.children.length >= 40) return;
+    const row = document.createElement('div');
+    row.className = 'tool';
+    row.innerHTML = `<input name="tname" placeholder="e.g. LangGraph" aria-label="Tool name" maxlength="120">
+      <select name="tcat" aria-label="Category">${CATS.map(([k, l]) => `<option value="${k}">${l}</option>`).join('')}</select>
+      <input name="usage" placeholder="How you use it (optional)" aria-label="How you use it" maxlength="400">
+      <button type="button" class="x" aria-label="Remove this tool">×</button>`;
+    row.querySelector('.x').onclick = () => { row.remove(); if (!tools.children.length) addTool(); };
+    if (v.name) row.querySelector('[name=tname]').value = v.name;
+    tools.appendChild(row);
+    return row;
+  }
+  addTool(); addTool(); addTool();
+  document.getElementById('add-tool').onclick = () => addTool().querySelector('input').focus();
+
+  const setKind = k => {
+    form.querySelector(`input[name=kind][value=${k}]`).checked = true;
+    form.classList.toggle('list', k === 'list');
+  };
+  form.querySelectorAll('input[name=kind]').forEach(r => r.addEventListener('change', () => setKind(r.value)));
+  document.querySelectorAll('[data-kind]').forEach(a => a.addEventListener('click', () => setKind(a.dataset.kind)));
+  if (location.hash === '#full-list') { setKind('list'); document.getElementById('review').scrollIntoView(); }
+
+  const field = name => form.querySelector(`[name=${name}]`);
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    msg.textContent = ''; msg.className = 'msg';
+    form.querySelectorAll('.err-on').forEach(el => el.classList.remove('err-on'));
+    const kind = form.querySelector('input[name=kind]:checked').value;
+    const data = {
+      kind,
+      name: field('name').value, email: field('email').value, company: field('company').value,
+      website: field('website').value, product: field('product').value, timeline: field('timeline').value,
+      notes: field('notes').value, website2: field('website2').value,
+      tools: kind === 'review' ? [...tools.children].map(r => ({ name: r.querySelector('[name=tname]').value, category: r.querySelector('[name=tcat]').value, usage: r.querySelector('[name=usage]').value })).filter(t => t.name.trim()) : [],
+      access: kind === 'review' ? [...form.querySelectorAll('input[name=access]:checked')].map(c => c.value) : [],
+    };
+    const fail = (text, name) => {
+      msg.textContent = text; msg.className = 'msg err';
+      const el = name === 'tools' ? tools.querySelector('input') : name && field(name);
+      if (el) { el.classList.add('err-on'); el.focus(); }
+    };
+    if (!data.name.trim()) return fail('Add your name.', 'name');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email.trim())) return fail('Add a valid work email.', 'email');
+    if (kind === 'review' && !data.company.trim()) return fail('Add your company.', 'company');
+    if (kind === 'review' && !data.tools.length) return fail('List at least one tool your agents run on.', 'tools');
+
+    const btn = document.getElementById('submit');
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      const res = await fetch('/api/ari-42/request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok) throw Object.assign(new Error(out.error || 'Something went wrong. Please email me instead.'), { field: out.field });
+      document.getElementById('ref').textContent = out.id;
+      document.getElementById('done-text').innerHTML = (kind === 'list'
+        ? "I'll email you the full 42-question list. "
+        : "I'll look at your stack and reply by email to agree scope and access. ") + `Your reference is <span class="mono">${out.id}</span>.`;
+      form.classList.add('sent');
+      document.getElementById('done').focus();
+    } catch (err) {
+      fail(err.message + (err.field ? '' : ' You can also write to akashmunshi07@gmail.com.'), err.field === 'secret' ? null : err.field);
+    } finally {
+      btn.disabled = false; btn.textContent = 'Send request';
+    }
+  });
+})();
+</script>
+</body>
+</html>
